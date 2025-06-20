@@ -1,18 +1,10 @@
 
 import React from 'react';
-import { 
-  Zap, 
-  Battery, 
-  Wrench, 
-  DollarSign, 
-  Users, 
-  Activity,
-  TrendingUp,
-  MapPin
-} from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import StatsCard from './StatsCard';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Battery, Zap, Users, TrendingUp, MapPin, AlertTriangle } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import ElectricStationBackground from '../UI/ElectricStationBackground';
 
 const Dashboard = () => {
   const { t } = useLanguage();
@@ -20,148 +12,144 @@ const Dashboard = () => {
   const stats = [
     {
       title: t('dashboard.totalStations'),
-      value: 248,
+      value: '156',
+      icon: MapPin,
+      trend: '+12%',
+      color: 'text-green-600'
+    },
+    {
+      title: t('dashboard.activeCharging'),
+      value: '89',
       icon: Zap,
-      change: '+12% ce mois',
-      changeType: 'positive' as const,
-      color: 'orange'
+      trend: '+8%',
+      color: 'text-blue-600'
     },
     {
-      title: t('dashboard.activeStations'),
-      value: 186,
-      icon: Battery,
-      change: '75% du réseau',
-      changeType: 'positive' as const,
-      color: 'green'
-    },
-    {
-      title: t('dashboard.maintenance'),
-      value: 12,
-      icon: Wrench,
-      change: '-8% vs semaine dernière',
-      changeType: 'positive' as const,
-      color: 'blue'
+      title: t('dashboard.totalUsers'),
+      value: '2,847',
+      icon: Users,
+      trend: '+23%',
+      color: 'text-purple-600'
     },
     {
       title: t('dashboard.revenue'),
-      value: '12,450 DA',
-      icon: DollarSign,
-      change: '+18% vs hier',
-      changeType: 'positive' as const,
-      color: 'green'
-    },
-    {
-      title: t('dashboard.sessions'),
-      value: 89,
-      icon: Activity,
-      change: 'En cours',
-      changeType: 'neutral' as const,
-      color: 'blue'
-    },
-    {
-      title: t('dashboard.users'),
-      value: 1432,
-      icon: Users,
-      change: '+156 nouveaux',
-      changeType: 'positive' as const,
-      color: 'orange'
+      value: '124,560 DA',
+      icon: TrendingUp,
+      trend: '+15%',
+      color: 'text-green-600'
     }
   ];
 
+  const recentActivity = [
+    { id: 1, station: 'Station Alger Centre', user: 'Ahmed B.', status: 'completed', time: '5 min' },
+    { id: 2, station: 'Station Hydra', user: 'Fatima K.', status: 'charging', time: '12 min' },
+    { id: 3, station: 'Station Bab Ezzouar', user: 'Mohamed A.', status: 'completed', time: '18 min' },
+    { id: 4, station: 'Station Kolea', user: 'Amina D.', status: 'charging', time: '25 min' }
+  ];
+
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex justify-between items-center">
+    <div className="space-y-6 relative">
+      <ElectricStationBackground variant="green" className="opacity-5" />
+      
+      <div className="flex items-center justify-between relative z-10">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">{t('dashboard.title')}</h1>
-          <p className="text-gray-600 mt-2">
-            Vue d'ensemble de votre réseau de bornes de recharge
-          </p>
+          <p className="text-gray-600 mt-1">{t('dashboard.subtitle')}</p>
+        </div>
+        <div className="flex items-center space-x-2 text-sm text-gray-500">
+          <div className="flex items-center space-x-1">
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <span>Système opérationnel</span>
+          </div>
         </div>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Stats Cards avec animation */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
         {stats.map((stat, index) => (
-          <StatsCard
-            key={index}
-            title={stat.title}
-            value={stat.value}
-            icon={stat.icon}
-            change={stat.change}
-            changeType={stat.changeType}
-            color={stat.color}
-          />
+          <div 
+            key={stat.title}
+            className="transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
+            style={{ animationDelay: `${index * 100}ms` }}
+          >
+            <StatsCard {...stat} />
+          </div>
         ))}
       </div>
 
-      {/* Recent Activity & Quick Actions */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recent Activity */}
-        <Card>
-          <CardHeader>
+      {/* Activité récente avec fond */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10">
+        <Card className="relative overflow-hidden">
+          <ElectricStationBackground variant="charging" className="opacity-5" />
+          <CardHeader className="relative z-10">
             <CardTitle className="flex items-center space-x-2">
-              <Activity className="h-5 w-5 text-orange-600" />
-              <span>Activité Récente</span>
+              <Battery className="h-5 w-5 text-green-600" />
+              <span>{t('dashboard.recentActivity')}</span>
             </CardTitle>
+            <CardDescription>Dernières sessions de charge</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            {[
-              { time: '14:32', event: 'Session terminée - Borne #247', status: 'success' },
-              { time: '14:18', event: 'Nouvelle session - Borne #156', status: 'info' },
-              { time: '13:45', event: 'Alerte maintenance - Borne #089', status: 'warning' },
-              { time: '13:22', event: 'Paiement traité - 850 DA', status: 'success' },
-            ].map((activity, index) => (
-              <div key={index} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
-                <div className="flex items-center space-x-3">
-                  <div className={`w-2 h-2 rounded-full ${
-                    activity.status === 'success' ? 'bg-green-500' :
-                    activity.status === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'
-                  }`} />
-                  <span className="text-sm text-gray-900">{activity.event}</span>
+          <CardContent className="relative z-10">
+            <div className="space-y-4">
+              {recentActivity.map((activity) => (
+                <div key={activity.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg transition-colors hover:bg-gray-100">
+                  <div className="flex items-center space-x-3">
+                    <div className={`w-3 h-3 rounded-full ${
+                      activity.status === 'charging' ? 'bg-yellow-500 animate-pulse' : 'bg-green-500'
+                    }`}></div>
+                    <div>
+                      <p className="font-medium text-gray-900">{activity.station}</p>
+                      <p className="text-sm text-gray-600">{activity.user}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-medium text-gray-900">{activity.time}</p>
+                    <p className={`text-xs ${
+                      activity.status === 'charging' ? 'text-yellow-600' : 'text-green-600'
+                    }`}>
+                      {activity.status === 'charging' ? 'En cours' : 'Terminé'}
+                    </p>
+                  </div>
                 </div>
-                <span className="text-xs text-gray-500">{activity.time}</span>
-              </div>
-            ))}
+              ))}
+            </div>
           </CardContent>
         </Card>
 
-        {/* Performance Overview */}
-        <Card>
-          <CardHeader>
+        <Card className="relative overflow-hidden">
+          <ElectricStationBackground variant="modern" className="opacity-5" />
+          <CardHeader className="relative z-10">
             <CardTitle className="flex items-center space-x-2">
-              <TrendingUp className="h-5 w-5 text-green-600" />
-              <span>Performance du Réseau</span>
+              <AlertTriangle className="h-5 w-5 text-orange-600" />
+              <span>Alertes & Maintenance</span>
             </CardTitle>
+            <CardDescription>État du réseau de bornes</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-medium">Taux d'utilisation</span>
-                <span className="text-sm font-bold text-green-600">74%</span>
+          <CardContent className="relative z-10">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <AlertTriangle className="h-4 w-4 text-orange-500" />
+                  <div>
+                    <p className="font-medium text-gray-900">Station Hydra</p>
+                    <p className="text-sm text-gray-600">Maintenance programmée</p>
+                  </div>
+                </div>
+                <span className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
+                  Demain 9h
+                </span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-green-500 h-2 rounded-full" style={{ width: '74%' }}></div>
-              </div>
-            </div>
-            
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-medium">Disponibilité réseau</span>
-                <span className="text-sm font-bold text-orange-600">92%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-orange-500 h-2 rounded-full" style={{ width: '92%' }}></div>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-medium">Satisfaction client</span>
-                <span className="text-sm font-bold text-blue-600">4.8/5</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-500 h-2 rounded-full" style={{ width: '96%' }}></div>
+              
+              <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                  <div>
+                    <p className="font-medium text-gray-900">Réseau global</p>
+                    <p className="text-sm text-gray-600">Fonctionnement optimal</p>
+                  </div>
+                </div>
+                <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                  96.8%
+                </span>
               </div>
             </div>
           </CardContent>

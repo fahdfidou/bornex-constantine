@@ -34,20 +34,22 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
   ];
 
   return (
-    <div className={`bg-gray-900 text-white transition-all duration-300 ${
+    <div className={`bg-gradient-to-b from-gray-900 to-gray-800 text-white transition-all duration-500 ease-in-out ${
       isCollapsed ? 'w-16' : 'w-64'
-    } min-h-screen flex flex-col`}>
+    } min-h-screen flex flex-col shadow-xl`}>
       {/* Toggle Button */}
       <div className="p-4 border-b border-gray-700">
         <Button
           variant="ghost"
           size="sm"
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="text-white hover:bg-gray-700 w-full justify-start"
+          className="text-white hover:bg-gray-700 w-full justify-start transition-all duration-300 hover:scale-105"
         >
-          {isCollapsed ? <Menu className="h-5 w-5" /> : <X className="h-5 w-5" />}
+          <div className="transition-transform duration-300">
+            {isCollapsed ? <Menu className="h-5 w-5" /> : <X className="h-5 w-5" />}
+          </div>
           {!isCollapsed && (
-            <span className="ml-2">
+            <span className="ml-2 transition-opacity duration-300">
               {language === 'ar' ? 'القائمة' : language === 'fr' ? 'Menu' : 'Menu'}
             </span>
           )}
@@ -56,21 +58,33 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
 
       {/* Menu Items */}
       <nav className="flex-1 p-4 space-y-2">
-        {menuItems.map((item) => {
+        {menuItems.map((item, index) => {
           const Icon = item.icon;
           return (
             <Button
               key={item.id}
               variant="ghost"
               onClick={() => setActiveTab(item.id)}
-              className={`w-full justify-start text-left ${
+              className={`w-full justify-start text-left transition-all duration-300 transform hover:translate-x-1 ${
                 activeTab === item.id 
-                  ? 'bg-green-600 text-white hover:bg-green-700' 
-                  : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+                  ? 'bg-gradient-to-r from-green-600 to-green-500 text-white hover:from-green-700 hover:to-green-600 shadow-lg scale-105' 
+                  : 'text-gray-300 hover:bg-gray-800 hover:text-white hover:shadow-md'
               }`}
+              style={{ 
+                animationDelay: `${index * 50}ms`,
+                animation: 'slideIn 0.5s ease-out forwards'
+              }}
             >
-              <Icon className="h-5 w-5" />
-              {!isCollapsed && <span className="ml-3">{item.label}</span>}
+              <Icon className={`h-5 w-5 transition-transform duration-300 ${
+                activeTab === item.id ? 'scale-110' : ''
+              }`} />
+              {!isCollapsed && (
+                <span className={`ml-3 transition-all duration-300 ${
+                  activeTab === item.id ? 'font-semibold' : ''
+                }`}>
+                  {item.label}
+                </span>
+              )}
             </Button>
           );
         })}
@@ -81,16 +95,37 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
         <Button
           variant="ghost"
           onClick={() => setActiveTab('settings')}
-          className={`w-full justify-start ${
+          className={`w-full justify-start transition-all duration-300 transform hover:translate-x-1 ${
             activeTab === 'settings'
-              ? 'bg-green-600 text-white hover:bg-green-700'
-              : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+              ? 'bg-gradient-to-r from-green-600 to-green-500 text-white hover:from-green-700 hover:to-green-600 shadow-lg scale-105'
+              : 'text-gray-300 hover:bg-gray-800 hover:text-white hover:shadow-md'
           }`}
         >
-          <Settings className="h-5 w-5" />
-          {!isCollapsed && <span className="ml-3">{t('common.settings')}</span>}
+          <Settings className={`h-5 w-5 transition-transform duration-300 ${
+            activeTab === 'settings' ? 'scale-110 rotate-90' : ''
+          }`} />
+          {!isCollapsed && (
+            <span className={`ml-3 transition-all duration-300 ${
+              activeTab === 'settings' ? 'font-semibold' : ''
+            }`}>
+              {t('common.settings')}
+            </span>
+          )}
         </Button>
       </div>
+
+      <style jsx>{`
+        @keyframes slideIn {
+          from {
+            opacity: 0;
+            transform: translateX(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+      `}</style>
     </div>
   );
 };
