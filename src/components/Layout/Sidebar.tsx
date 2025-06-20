@@ -61,7 +61,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
               onClick={() => setActiveTab(item.id)}
               className={`w-full justify-start text-left ${
                 activeTab === item.id 
-                  ? 'bg-orange-600 text-white hover:bg-orange-700' 
+                  ? 'bg-green-600 text-white hover:bg-green-700' 
                   : 'text-gray-300 hover:bg-gray-800 hover:text-white'
               }`}
             >
@@ -76,7 +76,12 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
       <div className="p-4 border-t border-gray-700">
         <Button
           variant="ghost"
-          className="w-full justify-start text-gray-300 hover:bg-gray-800 hover:text-white"
+          onClick={() => setActiveTab('settings')}
+          className={`w-full justify-start ${
+            activeTab === 'settings'
+              ? 'bg-green-600 text-white hover:bg-green-700'
+              : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+          }`}
         >
           <Settings className="h-5 w-5" />
           {!isCollapsed && <span className="ml-3">Paramètres</span>}

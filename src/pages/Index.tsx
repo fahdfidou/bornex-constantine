@@ -4,6 +4,12 @@ import { LanguageProvider } from '../contexts/LanguageContext';
 import Header from '../components/Layout/Header';
 import Sidebar from '../components/Layout/Sidebar';
 import Dashboard from '../components/Dashboard/Dashboard';
+import InteractiveMap from '../components/Map/InteractiveMap';
+import MaintenancePage from '../components/Maintenance/MaintenancePage';
+import PaymentsPage from '../components/Payments/PaymentsPage';
+import UsersPage from '../components/Users/UsersPage';
+import AnalyticsPage from '../components/Analytics/AnalyticsPage';
+import SettingsPage from '../components/Settings/SettingsPage';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -13,35 +19,17 @@ const Index = () => {
       case 'dashboard':
         return <Dashboard />;
       case 'map':
-        return (
-          <div className="flex items-center justify-center h-96">
-            <p className="text-gray-500">Carte interactive - À venir</p>
-          </div>
-        );
+        return <InteractiveMap />;
       case 'maintenance':
-        return (
-          <div className="flex items-center justify-center h-96">
-            <p className="text-gray-500">Module de maintenance - À venir</p>
-          </div>
-        );
+        return <MaintenancePage />;
       case 'payments':
-        return (
-          <div className="flex items-center justify-center h-96">
-            <p className="text-gray-500">Gestion des paiements - À venir</p>
-          </div>
-        );
+        return <PaymentsPage />;
       case 'users':
-        return (
-          <div className="flex items-center justify-center h-96">
-            <p className="text-gray-500">Gestion des utilisateurs - À venir</p>
-          </div>
-        );
+        return <UsersPage />;
       case 'analytics':
-        return (
-          <div className="flex items-center justify-center h-96">
-            <p className="text-gray-500">Analytiques avancées - À venir</p>
-          </div>
-        );
+        return <AnalyticsPage />;
+      case 'settings':
+        return <SettingsPage />;
       default:
         return <Dashboard />;
     }

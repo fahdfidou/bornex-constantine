@@ -50,7 +50,7 @@ const Header = () => {
                     key={lang.code}
                     onClick={() => setLanguage(lang.code as any)}
                     className={`flex items-center space-x-2 ${
-                      language === lang.code ? 'bg-orange-50 text-orange-600' : ''
+                      language === lang.code ? 'bg-green-50 text-green-600' : ''
                     }`}
                   >
                     <span>{lang.flag}</span>
