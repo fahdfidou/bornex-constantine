@@ -14,7 +14,7 @@ const InteractiveMap = () => {
   const [selectedStation, setSelectedStation] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [mapboxToken, setMapboxToken] = useState('');
-  const [userLocation, setUserLocation] = useState(null);
+  const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
   const mapContainer = useRef(null);
   const map = useRef(null);
   const markers = useRef([]);
@@ -27,7 +27,7 @@ const InteractiveMap = () => {
       status: "available",
       power: "22 kW",
       type: "AC",
-      coordinates: [3.0588, 36.7538],
+      coordinates: [3.0588, 36.7538] as [number, number],
       price: "25 DA/kWh"
     },
     {
@@ -37,7 +37,7 @@ const InteractiveMap = () => {
       status: "occupied",
       power: "50 kW",
       type: "DC",
-      coordinates: [3.1496, 36.7114],
+      coordinates: [3.1496, 36.7114] as [number, number],
       price: "35 DA/kWh"
     },
     {
@@ -47,7 +47,7 @@ const InteractiveMap = () => {
       status: "maintenance",
       power: "75 kW",
       type: "DC",
-      coordinates: [3.2154, 36.6910],
+      coordinates: [3.2154, 36.6910] as [number, number],
       price: "40 DA/kWh"
     },
     {
@@ -57,7 +57,7 @@ const InteractiveMap = () => {
       status: "available",
       power: "11 kW",
       type: "AC",
-      coordinates: [3.0370, 36.7677],
+      coordinates: [3.0370, 36.7677] as [number, number],
       price: "20 DA/kWh"
     }
   ];
