@@ -39,6 +39,8 @@ const translations = {
     'map.occupied': 'Occupé',
     'map.offline': 'Hors ligne',
     'map.maintenance': 'Maintenance',
+    'map.search': 'Rechercher une station...',
+    'map.myLocation': 'Ma position',
     
     // Status
     'status.online': 'En ligne',
@@ -54,6 +56,7 @@ const translations = {
     'common.search': 'Rechercher',
     'common.filter': 'Filtrer',
     'common.export': 'Exporter',
+    'common.settings': 'Paramètres',
   },
   ar: {
     // Navigation
@@ -84,6 +87,8 @@ const translations = {
     'map.occupied': 'مشغول',
     'map.offline': 'غير متصل',
     'map.maintenance': 'صيانة',
+    'map.search': 'البحث عن محطة...',
+    'map.myLocation': 'موقعي',
     
     // Status
     'status.online': 'متصل',
@@ -99,6 +104,7 @@ const translations = {
     'common.search': 'بحث',
     'common.filter': 'تصفية',
     'common.export': 'تصدير',
+    'common.settings': 'الإعدادات',
   },
   en: {
     // Navigation
@@ -129,6 +135,8 @@ const translations = {
     'map.occupied': 'Occupied',
     'map.offline': 'Offline',
     'map.maintenance': 'Maintenance',
+    'map.search': 'Search station...',
+    'map.myLocation': 'My Location',
     
     // Status
     'status.online': 'Online',
@@ -144,6 +152,7 @@ const translations = {
     'common.search': 'Search',
     'common.filter': 'Filter',
     'common.export': 'Export',
+    'common.settings': 'Settings',
   },
 };
 

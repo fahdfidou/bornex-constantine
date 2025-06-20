@@ -21,7 +21,7 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const menuItems = [
@@ -46,7 +46,11 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
           className="text-white hover:bg-gray-700 w-full justify-start"
         >
           {isCollapsed ? <Menu className="h-5 w-5" /> : <X className="h-5 w-5" />}
-          {!isCollapsed && <span className="ml-2">Menu</span>}
+          {!isCollapsed && (
+            <span className="ml-2">
+              {language === 'ar' ? 'القائمة' : language === 'fr' ? 'Menu' : 'Menu'}
+            </span>
+          )}
         </Button>
       </div>
 
@@ -84,7 +88,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
           }`}
         >
           <Settings className="h-5 w-5" />
-          {!isCollapsed && <span className="ml-3">Paramètres</span>}
+          {!isCollapsed && <span className="ml-3">{t('common.settings')}</span>}
         </Button>
       </div>
     </div>
