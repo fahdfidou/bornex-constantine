@@ -65,14 +65,13 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
               key={item.id}
               variant="ghost"
               onClick={() => setActiveTab(item.id)}
-              className={`w-full justify-start text-left transition-all duration-300 transform hover:translate-x-1 ${
+              className={`w-full justify-start text-left transition-all duration-300 transform hover:translate-x-1 animate-[slideIn_0.5s_ease-out_forwards] ${
                 activeTab === item.id 
                   ? 'bg-gradient-to-r from-green-600 to-green-500 text-white hover:from-green-700 hover:to-green-600 shadow-lg scale-105' 
                   : 'text-gray-300 hover:bg-gray-800 hover:text-white hover:shadow-md'
               }`}
               style={{ 
-                animationDelay: `${index * 50}ms`,
-                animation: 'slideIn 0.5s ease-out forwards'
+                animationDelay: `${index * 50}ms`
               }}
             >
               <Icon className={`h-5 w-5 transition-transform duration-300 ${
@@ -113,19 +112,6 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
           )}
         </Button>
       </div>
-
-      <style jsx>{`
-        @keyframes slideIn {
-          from {
-            opacity: 0;
-            transform: translateX(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-      `}</style>
     </div>
   );
 };
