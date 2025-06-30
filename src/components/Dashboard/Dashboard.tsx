@@ -4,6 +4,7 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import StatsCard from './StatsCard';
 import { Battery, Zap, Users, TrendingUp, MapPin, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import ChargingStationImage from '../UI/ChargingStationImage';
 
 const Dashboard = () => {
   const { t } = useLanguage();
@@ -40,38 +41,35 @@ const Dashboard = () => {
   ];
 
   const recentActivity = [
-    { id: 1, station: 'Station Alger Centre', user: 'Ahmed B.', status: 'completed', time: '5 min' },
-    { id: 2, station: 'Station Hydra', user: 'Fatima K.', status: 'charging', time: '12 min' },
-    { id: 3, station: 'Station Bab Ezzouar', user: 'Mohamed A.', status: 'completed', time: '18 min' },
-    { id: 4, station: 'Station Kolea', user: 'Amina D.', status: 'charging', time: '25 min' }
+    { id: 1, station: t('stations.centreville'), user: 'Ahmed B.', status: 'completed', time: '5 min' },
+    { id: 2, station: t('stations.university'), user: 'Fatima K.', status: 'charging', time: '12 min' },
+    { id: 3, station: t('stations.airport'), user: 'Mohamed A.', status: 'completed', time: '18 min' },
+    { id: 4, station: t('stations.port'), user: 'Amina D.', status: 'charging', time: '25 min' }
   ];
 
   return (
     <div className="relative min-h-screen">
       {/* Background avec images de bornes de recharge */}
       <div className="absolute inset-0 opacity-5 pointer-events-none">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-green-400 to-blue-500 rounded-full blur-xl"></div>
-        <div className="absolute top-20 right-20 w-24 h-24 bg-gradient-to-br from-blue-400 to-green-500 rounded-full blur-lg"></div>
-        <div className="absolute bottom-20 left-20 w-28 h-28 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full blur-xl"></div>
+        <div className="absolute top-10 left-10 w-40 h-40 bg-gradient-to-br from-green-400 to-blue-500 rounded-full blur-2xl"></div>
+        <div className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-br from-blue-400 to-green-500 rounded-full blur-xl"></div>
+        <div className="absolute bottom-20 left-20 w-36 h-36 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full blur-2xl"></div>
         
-        {/* Icônes de bornes en arrière-plan */}
-        <div className="absolute top-1/4 left-1/3 opacity-20">
-          <svg width="60" height="80" viewBox="0 0 60 80" className="text-green-500">
-            <rect x="15" y="10" width="30" height="50" rx="5" fill="currentColor" />
-            <rect x="20" y="15" width="20" height="15" rx="3" fill="white" />
-            <circle cx="30" cy="22" r="3" fill="currentColor" />
-            <rect x="25" y="35" width="10" height="20" rx="2" fill="white" />
-            <path d="M30 70 Q35 65 45 70" stroke="currentColor" strokeWidth="3" fill="none" />
-          </svg>
+        {/* Images de bornes de recharge en arrière-plan */}
+        <div className="absolute top-1/4 left-1/3 opacity-8 w-24 h-32">
+          <ChargingStationImage variant="modern" showBackground={false} />
         </div>
         
-        <div className="absolute bottom-1/3 right-1/4 opacity-15">
-          <svg width="50" height="70" viewBox="0 0 50 70" className="text-blue-500">
-            <rect x="10" y="5" width="30" height="45" rx="4" fill="currentColor" />
-            <rect x="15" y="10" width="20" height="12" rx="2" fill="white" />
-            <circle cx="25" cy="16" r="2" fill="currentColor" />
-            <rect x="20" y="25" width="10" height="15" rx="2" fill="white" />
-          </svg>
+        <div className="absolute bottom-1/3 right-1/4 opacity-6 w-20 h-28">
+          <ChargingStationImage variant="tesla" showBackground={false} />
+        </div>
+        
+        <div className="absolute top-1/2 left-1/5 opacity-7 w-22 h-30">
+          <ChargingStationImage variant="fastcharge" showBackground={false} />
+        </div>
+        
+        <div className="absolute bottom-1/4 left-1/2 opacity-5 w-18 h-26">
+          <ChargingStationImage variant="urban" showBackground={false} />
         </div>
       </div>
       
@@ -161,7 +159,7 @@ const Dashboard = () => {
                 <div className="flex items-center space-x-3">
                   <AlertTriangle className="h-4 w-4 text-orange-500" />
                   <div>
-                    <p className="font-medium text-gray-900 dark:text-white text-sm transition-colors duration-200">Station Hydra</p>
+                    <p className="font-medium text-gray-900 dark:text-white text-sm transition-colors duration-200">{t('stations.university')}</p>
                     <p className="text-xs text-gray-600 dark:text-gray-400 transition-colors duration-200">{t('dashboard.scheduledMaintenance')}</p>
                   </div>
                 </div>
