@@ -1,3 +1,4 @@
+
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
 interface LanguageContextProps {
@@ -44,6 +45,30 @@ const translations = {
       inProgress: 'En cours',
       completed: 'Terminé',
       systemOperational: 'Système opérationnel'
+    },
+    
+    // Maintenance
+    maintenance: {
+      title: 'Maintenance',
+      newTicket: 'Nouveau Ticket',
+      activeTickets: 'Tickets Actifs',
+      inProgress: 'En Cours',
+      completed: 'Terminé',
+      technicians: 'Techniciens',
+      tickets: 'Tickets',
+      history: 'Historique',
+      preventive: 'Préventive',
+      urgent: 'Urgent',
+      medium: 'Moyen',
+      low: 'Faible',
+      technician: 'Technicien',
+      createdOn: 'Créé le',
+      estimatedTime: 'Temps Estimé',
+      viewDetails: 'Voir Détails',
+      scheduled: 'Maintenance Programmée',
+      scheduledLabel: 'Programmé',
+      quarterlyMaintenance: 'Maintenance trimestrielle',
+      monthlyInspection: 'Inspection mensuelle'
     },
     
     // Payments
@@ -216,6 +241,30 @@ const translations = {
       systemOperational: 'النظام يعمل'
     },
     
+    // Maintenance
+    maintenance: {
+      title: 'الصيانة',
+      newTicket: 'تذكرة جديدة',
+      activeTickets: 'التذاكر النشطة',
+      inProgress: 'قيد التقدم',
+      completed: 'مكتمل',
+      technicians: 'الفنيين',
+      tickets: 'التذاكر',
+      history: 'التاريخ',
+      preventive: 'وقائية',
+      urgent: 'عاجل',
+      medium: 'متوسط',
+      low: 'منخفض',
+      technician: 'الفني',
+      createdOn: 'تم الإنشاء في',
+      estimatedTime: 'الوقت المقدر',
+      viewDetails: 'عرض التفاصيل',
+      scheduled: 'الصيانة المجدولة',
+      scheduledLabel: 'مجدول',
+      quarterlyMaintenance: 'الصيانة الفصلية',
+      monthlyInspection: 'الفحص الشهري'
+    },
+    
     // Payments
     payments: {
       title: 'إدارة المدفوعات',
@@ -384,6 +433,30 @@ const translations = {
       inProgress: 'In Progress',
       completed: 'Completed',
       systemOperational: 'System operational'
+    },
+    
+    // Maintenance
+    maintenance: {
+      title: 'Maintenance',
+      newTicket: 'New Ticket',
+      activeTickets: 'Active Tickets',
+      inProgress: 'In Progress',
+      completed: 'Completed',
+      technicians: 'Technicians',
+      tickets: 'Tickets',
+      history: 'History',
+      preventive: 'Preventive',
+      urgent: 'Urgent',
+      medium: 'Medium',
+      low: 'Low',
+      technician: 'Technician',
+      createdOn: 'Created On',
+      estimatedTime: 'Estimated Time',
+      viewDetails: 'View Details',
+      scheduled: 'Scheduled Maintenance',
+      scheduledLabel: 'Scheduled',
+      quarterlyMaintenance: 'Quarterly maintenance',
+      monthlyInspection: 'Monthly inspection'
     },
     
     // Payments
