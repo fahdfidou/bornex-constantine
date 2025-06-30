@@ -2,6 +2,7 @@
 import React from 'react';
 import { LucideIcon } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 interface StatsCardProps {
   title: string;
@@ -20,6 +21,8 @@ const StatsCard: React.FC<StatsCardProps> = ({
   changeType = 'positive',
   color = 'blue'
 }) => {
+  const { t } = useLanguage();
+
   const getChangeColor = () => {
     switch (changeType) {
       case 'positive': return 'text-green-600 dark:text-green-400';
@@ -53,7 +56,7 @@ const StatsCard: React.FC<StatsCardProps> = ({
         <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1 transition-colors duration-200">{value}</div>
         {trend && (
           <p className={`text-xs font-medium transition-colors duration-200 ${getChangeColor()}`}>
-            {trend} ce mois
+            {trend} {t('common.thisMonth')}
           </p>
         )}
       </CardContent>

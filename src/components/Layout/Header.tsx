@@ -85,13 +85,13 @@ const Header = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-40 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
                 <DropdownMenuItem className="text-sm dark:text-white dark:hover:bg-gray-700 transition-colors duration-200">
-                  Profil
+                  {t('common.profile')}
                 </DropdownMenuItem>
                 <DropdownMenuItem className="text-sm dark:text-white dark:hover:bg-gray-700 transition-colors duration-200">
                   {t('common.settings')}
                 </DropdownMenuItem>
                 <DropdownMenuItem className="text-sm dark:text-white dark:hover:bg-gray-700 transition-colors duration-200">
-                  Déconnexion
+                  {t('common.logout')}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

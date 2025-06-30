@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { useLanguage } from '../../contexts/LanguageContext';
+import ChargingStationImage from '../UI/ChargingStationImage';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -82,9 +83,9 @@ const InteractiveMap = () => {
 
   const getStatusText = (status) => {
     switch (status) {
-      case 'available': return language === 'ar' ? 'متاح' : language === 'fr' ? 'Disponible' : 'Available';
-      case 'occupied': return language === 'ar' ? 'مشغول' : language === 'fr' ? 'Occupée' : 'Occupied';
-      case 'maintenance': return language === 'ar' ? 'صيانة' : language === 'fr' ? 'Maintenance' : 'Maintenance';
+      case 'available': return t('map.available');
+      case 'occupied': return t('map.occupied');
+      case 'maintenance': return t('map.maintenance');
       default: return status;
     }
   };
@@ -169,33 +170,31 @@ const InteractiveMap = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-3xl font-bold text-gray-900">
-          {language === 'ar' ? 'الخريطة التفاعلية' : language === 'fr' ? 'Carte Interactive' : 'Interactive Map'}
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white transition-colors duration-200">
+          {t('map.title')}
         </h1>
         <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
             <Input
-              placeholder={language === 'ar' ? 'البحث عن محطة...' : language === 'fr' ? 'Rechercher une station...' : 'Search station...'}
+              placeholder={t('map.search')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 w-full sm:w-64"
+              className="pl-10 w-full sm:w-64 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
             />
           </div>
-          <Button variant="outline" size="sm" onClick={getUserLocation}>
+          <Button variant="outline" size="sm" onClick={getUserLocation} className="dark:border-gray-600 dark:text-white dark:hover:bg-gray-700">
             <Navigation className="h-4 w-4 mr-2" />
-            {language === 'ar' ? 'موقعي' : language === 'fr' ? 'Ma position' : 'My Location'}
+            {t('map.myLocation')}
           </Button>
         </div>
       </div>
 
       {!mapboxToken && (
-        <Card className="border-yellow-200 bg-yellow-50">
+        <Card className="border-yellow-200 bg-yellow-50 dark:border-yellow-800 dark:bg-yellow-900/20">
           <CardContent className="p-4">
-            <p className="text-sm text-yellow-800 mb-3">
-              {language === 'ar' ? 'أدخل رمز Mapbox للوصول إلى الخريطة التفاعلية:' : 
-               language === 'fr' ? 'Entrez votre token Mapbox pour accéder à la carte interactive:' : 
-               'Enter your Mapbox token to access the interactive map:'}
+            <p className="text-sm text-yellow-800 dark:text-yellow-200 mb-3">
+              {t('map.enterMapboxToken')}
             </p>
             <div className="flex gap-2">
               <Input
@@ -203,15 +202,15 @@ const InteractiveMap = () => {
                 placeholder="pk.eyJ1Ijoi..."
                 value={mapboxToken}
                 onChange={(e) => setMapboxToken(e.target.value)}
-                className="flex-1"
+                className="flex-1 dark:bg-gray-800 dark:border-gray-600"
               />
               <Button size="sm" onClick={() => console.log('Token configuré')}>
-                {language === 'ar' ? 'تأكيد' : language === 'fr' ? 'Confirmer' : 'Confirm'}
+                {t('map.confirm')}
               </Button>
             </div>
-            <p className="text-xs text-gray-600 mt-2">
-              {language === 'ar' ? 'احصل على رمزك من' : language === 'fr' ? 'Obtenez votre token sur' : 'Get your token from'}{' '}
-              <a href="https://mapbox.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
+              {t('map.getTokenFrom')}{' '}
+              <a href="https://mapbox.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">
                 mapbox.com
               </a>
             </p>
@@ -222,12 +221,10 @@ const InteractiveMap = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Carte */}
         <div className="lg:col-span-2">
-          <Card className="h-[500px]">
+          <Card className="h-[500px] dark:bg-gray-800 dark:border-gray-700">
             <CardHeader>
-              <CardTitle>
-                {language === 'ar' ? 'محطات الشحن - الجزائر' : 
-                 language === 'fr' ? 'Bornes de Recharge - Alger' : 
-                 'Charging Stations - Algiers'}
+              <CardTitle className="dark:text-white">
+                {t('map.chargingStationsAlgiers')}
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0 h-full">
@@ -238,13 +235,10 @@ const InteractiveMap = () => {
 
         {/* Détails de la station */}
         <div className="space-y-4">
-          <Card>
+          <Card className="dark:bg-gray-800 dark:border-gray-700">
             <CardHeader>
-              <CardTitle>
-                {selectedStation ? selectedStation.name : 
-                 (language === 'ar' ? 'اختر محطة' : 
-                  language === 'fr' ? 'Sélectionnez une station' : 
-                  'Select a station')}
+              <CardTitle className="dark:text-white">
+                {selectedStation ? selectedStation.name : t('map.selectStation')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -257,65 +251,71 @@ const InteractiveMap = () => {
                     </Badge>
                   </div>
                   
+                  {/* Image de la borne */}
+                  <div className="w-full h-32 flex items-center justify-center bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <ChargingStationImage 
+                      variant={selectedStation.type === 'DC' ? 'fastcharge' : 'modern'} 
+                      className="w-20 h-20"
+                      showBackground={false}
+                    />
+                  </div>
+                  
                   <div className="space-y-2">
-                    <p className="text-sm text-gray-600">
-                      <strong>
-                        {language === 'ar' ? 'العنوان:' : language === 'fr' ? 'Adresse:' : 'Address:'}
-                      </strong> {selectedStation.address}
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      <strong>{t('map.address')}:</strong> {selectedStation.address}
                     </p>
-                    <p className="text-sm text-gray-600">
-                      <strong>
-                        {language === 'ar' ? 'القوة:' : language === 'fr' ? 'Puissance:' : 'Power:'}
-                      </strong> {selectedStation.power} ({selectedStation.type})
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      <strong>{t('map.power')}:</strong> {selectedStation.power} ({selectedStation.type})
                     </p>
-                    <p className="text-sm text-gray-600">
-                      <strong>
-                        {language === 'ar' ? 'التعرفة:' : language === 'fr' ? 'Tarif:' : 'Rate:'}
-                      </strong> {selectedStation.price}
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      <strong>{t('map.rate')}:</strong> {selectedStation.price}
                     </p>
                   </div>
 
                   {selectedStation.status === 'available' && (
                     <Button className="w-full bg-green-600 hover:bg-green-700">
-                      {language === 'ar' ? 'احجز هذه المحطة' : 
-                       language === 'fr' ? 'Réserver cette borne' : 
-                       'Reserve this station'}
+                      {t('map.reserveStation')}
                     </Button>
                   )}
                 </div>
               ) : (
-                <p className="text-gray-500 text-center py-8">
-                  {language === 'ar' ? 'انقر على محطة في الخريطة لرؤية التفاصيل' : 
-                   language === 'fr' ? 'Cliquez sur une borne sur la carte pour voir les détails' : 
-                   'Click on a station on the map to see details'}
-                </p>
+                <div className="text-center py-8">
+                  <ChargingStationImage 
+                    variant="urban" 
+                    className="w-24 h-24 mx-auto mb-4 opacity-50"
+                    showBackground={false}
+                  />
+                  <p className="text-gray-500 dark:text-gray-400">
+                    {t('map.clickStation')}
+                  </p>
+                </div>
               )}
             </CardContent>
           </Card>
 
           {/* Statistiques rapides */}
-          <Card>
+          <Card className="dark:bg-gray-800 dark:border-gray-700">
             <CardHeader>
-              <CardTitle className="text-lg">
-                {language === 'ar' ? 'إحصائيات' : language === 'fr' ? 'Statistiques' : 'Statistics'}
+              <CardTitle className="text-lg dark:text-white">
+                {t('map.statistics')}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 gap-4 text-center">
                 <div>
-                  <div className="text-2xl font-bold text-green-600">
+                  <div className="text-2xl font-bold text-green-600 dark:text-green-400">
                     {filteredStations.filter(s => s.status === 'available').length}
                   </div>
-                  <div className="text-xs text-gray-500">
-                    {language === 'ar' ? 'متاح' : language === 'fr' ? 'Disponibles' : 'Available'}
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                    {t('map.available')}
                   </div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-red-600">
+                  <div className="text-2xl font-bold text-red-600 dark:text-red-400">
                     {filteredStations.filter(s => s.status === 'occupied').length}
                   </div>
-                  <div className="text-xs text-gray-500">
-                    {language === 'ar' ? 'مشغول' : language === 'fr' ? 'Occupées' : 'Occupied'}
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                    {t('map.occupied')}
                   </div>
                 </div>
               </div>
@@ -323,10 +323,10 @@ const InteractiveMap = () => {
           </Card>
 
           {/* Liste des stations filtrées */}
-          <Card>
+          <Card className="dark:bg-gray-800 dark:border-gray-700">
             <CardHeader>
-              <CardTitle className="text-lg">
-                {language === 'ar' ? 'المحطات القريبة' : language === 'fr' ? 'Stations proches' : 'Nearby Stations'}
+              <CardTitle className="text-lg dark:text-white">
+                {t('map.nearbyStations')}
               </CardTitle>
             </CardHeader>
             <CardContent className="max-h-64 overflow-y-auto">
@@ -334,15 +334,15 @@ const InteractiveMap = () => {
                 {filteredStations.map((station) => (
                   <div
                     key={station.id}
-                    className={`p-3 border rounded-lg cursor-pointer hover:bg-gray-50 ${
-                      selectedStation?.id === station.id ? 'border-green-500 bg-green-50' : 'border-gray-200'
+                    className={`p-3 border dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 ${
+                      selectedStation?.id === station.id ? 'border-green-500 bg-green-50 dark:bg-green-900/20' : 'border-gray-200'
                     }`}
                     onClick={() => setSelectedStation(station)}
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
-                        <h4 className="font-medium text-sm">{station.name}</h4>
-                        <p className="text-xs text-gray-500">{station.power} • {station.price}</p>
+                        <h4 className="font-medium text-sm dark:text-white">{station.name}</h4>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">{station.power} • {station.price}</p>
                       </div>
                       <Badge variant={station.status === 'available' ? 'default' : 'secondary'} className="ml-2">
                         {getStatusText(station.status)}
