@@ -48,7 +48,7 @@ const Index = () => {
 
   return (
     <LanguageProvider>
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100 flex w-full">
+      <div className="min-h-screen bg-gray-50 flex w-full">
         <Sidebar activeTab={activeTab} setActiveTab={handleTabChange} />
         <div className="flex-1 flex flex-col">
           <Header />

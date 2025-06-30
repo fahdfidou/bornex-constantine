@@ -4,7 +4,6 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import StatsCard from './StatsCard';
 import { Battery, Zap, Users, TrendingUp, MapPin, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import ElectricStationBackground from '../UI/ElectricStationBackground';
 
 const Dashboard = () => {
   const { t } = useLanguage();
@@ -15,28 +14,28 @@ const Dashboard = () => {
       value: '156',
       icon: MapPin,
       trend: '+12%',
-      color: 'text-green-600'
+      color: 'blue'
     },
     {
       title: t('dashboard.activeCharging'),
       value: '89',
       icon: Zap,
       trend: '+8%',
-      color: 'text-blue-600'
+      color: 'green'
     },
     {
       title: t('dashboard.totalUsers'),
       value: '2,847',
       icon: Users,
       trend: '+23%',
-      color: 'text-purple-600'
+      color: 'purple'
     },
     {
       title: t('dashboard.revenue'),
       value: '124,560 DA',
       icon: TrendingUp,
       trend: '+15%',
-      color: 'text-green-600'
+      color: 'orange'
     }
   ];
 
@@ -48,28 +47,27 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="space-y-6 relative">
-      <ElectricStationBackground variant="green" className="opacity-5" />
-      
-      <div className="flex items-center justify-between relative z-10">
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">{t('dashboard.title')}</h1>
-          <p className="text-gray-600 mt-1">{t('dashboard.subtitle')}</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t('dashboard.title')}</h1>
+          <p className="text-gray-500 mt-1 text-sm">{t('dashboard.subtitle')}</p>
         </div>
         <div className="flex items-center space-x-2 text-sm text-gray-500">
-          <div className="flex items-center space-x-1">
+          <div className="flex items-center space-x-2">
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
             <span>Système opérationnel</span>
           </div>
         </div>
       </div>
 
-      {/* Stats Cards avec animation */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
           <div 
             key={stat.title}
-            className="transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
+            className="transform transition-all duration-300 hover:scale-105"
             style={{ animationDelay: `${index * 100}ms` }}
           >
             <StatsCard {...stat} />
@@ -77,80 +75,93 @@ const Dashboard = () => {
         ))}
       </div>
 
-      {/* Activité récente avec fond */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10">
-        <Card className="relative overflow-hidden">
-          <ElectricStationBackground variant="charging" className="opacity-5" />
-          <CardHeader className="relative z-10">
-            <CardTitle className="flex items-center space-x-2">
-              <Battery className="h-5 w-5 text-green-600" />
+      {/* Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Recent Activity */}
+        <Card className="shadow-sm border-gray-200">
+          <CardHeader className="pb-4">
+            <CardTitle className="flex items-center space-x-2 text-lg">
+              <Battery className="h-5 w-5 text-blue-600" />
               <span>{t('dashboard.recentActivity')}</span>
             </CardTitle>
-            <CardDescription>Dernières sessions de charge</CardDescription>
+            <CardDescription className="text-sm text-gray-500">
+              Dernières sessions de charge
+            </CardDescription>
           </CardHeader>
-          <CardContent className="relative z-10">
-            <div className="space-y-4">
-              {recentActivity.map((activity) => (
-                <div key={activity.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg transition-colors hover:bg-gray-100">
-                  <div className="flex items-center space-x-3">
-                    <div className={`w-3 h-3 rounded-full ${
-                      activity.status === 'charging' ? 'bg-yellow-500 animate-pulse' : 'bg-green-500'
-                    }`}></div>
-                    <div>
-                      <p className="font-medium text-gray-900">{activity.station}</p>
-                      <p className="text-sm text-gray-600">{activity.user}</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-medium text-gray-900">{activity.time}</p>
-                    <p className={`text-xs ${
-                      activity.status === 'charging' ? 'text-yellow-600' : 'text-green-600'
-                    }`}>
-                      {activity.status === 'charging' ? 'En cours' : 'Terminé'}
-                    </p>
+          <CardContent className="space-y-3">
+            {recentActivity.map((activity) => (
+              <div key={activity.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                <div className="flex items-center space-x-3">
+                  <div className={`w-2 h-2 rounded-full ${
+                    activity.status === 'charging' ? 'bg-blue-500 animate-pulse' : 'bg-green-500'
+                  }`}></div>
+                  <div>
+                    <p className="font-medium text-gray-900 text-sm">{activity.station}</p>
+                    <p className="text-xs text-gray-500">{activity.user}</p>
                   </div>
                 </div>
-              ))}
-            </div>
+                <div className="text-right">
+                  <p className="text-xs font-medium text-gray-900">{activity.time}</p>
+                  <p className={`text-xs ${
+                    activity.status === 'charging' ? 'text-blue-600' : 'text-green-600'
+                  }`}>
+                    {activity.status === 'charging' ? 'En cours' : 'Terminé'}
+                  </p>
+                </div>
+              </div>
+            ))}
           </CardContent>
         </Card>
 
-        <Card className="relative overflow-hidden">
-          <ElectricStationBackground variant="modern" className="opacity-5" />
-          <CardHeader className="relative z-10">
-            <CardTitle className="flex items-center space-x-2">
-              <AlertTriangle className="h-5 w-5 text-orange-600" />
-              <span>Alertes & Maintenance</span>
+        {/* System Status */}
+        <Card className="shadow-sm border-gray-200">
+          <CardHeader className="pb-4">
+            <CardTitle className="flex items-center space-x-2 text-lg">
+              <AlertTriangle className="h-5 w-5 text-orange-500" />
+              <span>État du système</span>
             </CardTitle>
-            <CardDescription>État du réseau de bornes</CardDescription>
+            <CardDescription className="text-sm text-gray-500">
+              Statut des bornes et maintenance
+            </CardDescription>
           </CardHeader>
-          <CardContent className="relative z-10">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
-                <div className="flex items-center space-x-3">
-                  <AlertTriangle className="h-4 w-4 text-orange-500" />
-                  <div>
-                    <p className="font-medium text-gray-900">Station Hydra</p>
-                    <p className="text-sm text-gray-600">Maintenance programmée</p>
-                  </div>
+          <CardContent className="space-y-3">
+            <div className="flex items-center justify-between p-4 bg-orange-50 rounded-xl border border-orange-100">
+              <div className="flex items-center space-x-3">
+                <AlertTriangle className="h-4 w-4 text-orange-500" />
+                <div>
+                  <p className="font-medium text-gray-900 text-sm">Station Hydra</p>
+                  <p className="text-xs text-gray-600">Maintenance programmée</p>
                 </div>
-                <span className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
-                  Demain 9h
-                </span>
               </div>
-              
-              <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
-                <div className="flex items-center space-x-3">
-                  <div className="w-4 h-4 bg-green-500 rounded-full"></div>
-                  <div>
-                    <p className="font-medium text-gray-900">Réseau global</p>
-                    <p className="text-sm text-gray-600">Fonctionnement optimal</p>
-                  </div>
+              <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full font-medium">
+                Demain 9h
+              </span>
+            </div>
+            
+            <div className="flex items-center justify-between p-4 bg-green-50 rounded-xl border border-green-100">
+              <div className="flex items-center space-x-3">
+                <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                <div>
+                  <p className="font-medium text-gray-900 text-sm">Réseau global</p>
+                  <p className="text-xs text-gray-600">Fonctionnement optimal</p>
                 </div>
-                <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
-                  96.8%
-                </span>
               </div>
+              <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">
+                96.8%
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between p-4 bg-blue-50 rounded-xl border border-blue-100">
+              <div className="flex items-center space-x-3">
+                <Zap className="h-4 w-4 text-blue-500" />
+                <div>
+                  <p className="font-medium text-gray-900 text-sm">Sessions actives</p>
+                  <p className="text-xs text-gray-600">Utilisateurs connectés</p>
+                </div>
+              </div>
+              <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-medium">
+                89 actives
+              </span>
             </div>
           </CardContent>
         </Card>

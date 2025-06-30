@@ -34,30 +34,33 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
   ];
 
   return (
-    <div className={`bg-gradient-to-b from-gray-900 to-gray-800 text-white transition-all duration-500 ease-in-out ${
+    <div className={`bg-white border-r border-gray-200 transition-all duration-300 ease-in-out ${
       isCollapsed ? 'w-16' : 'w-64'
-    } min-h-screen flex flex-col shadow-xl`}>
-      {/* Toggle Button */}
-      <div className="p-4 border-b border-gray-700">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          className="text-white hover:bg-gray-700 w-full justify-start transition-all duration-300 hover:scale-105"
-        >
-          <div className="transition-transform duration-300">
-            {isCollapsed ? <Menu className="h-5 w-5" /> : <X className="h-5 w-5" />}
-          </div>
+    } min-h-screen flex flex-col shadow-sm`}>
+      {/* Header */}
+      <div className="p-4 border-b border-gray-100">
+        <div className="flex items-center justify-between">
           {!isCollapsed && (
-            <span className="ml-2 transition-opacity duration-300">
-              {language === 'ar' ? 'القائمة' : language === 'fr' ? 'Menu' : 'Menu'}
-            </span>
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">B</span>
+              </div>
+              <span className="font-semibold text-gray-900">BorneX</span>
+            </div>
           )}
-        </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            className="text-gray-500 hover:text-gray-700 hover:bg-gray-50 p-1.5 h-auto"
+          >
+            {isCollapsed ? <Menu className="h-4 w-4" /> : <X className="h-4 w-4" />}
+          </Button>
+        </div>
       </div>
 
-      {/* Menu Items */}
-      <nav className="flex-1 p-4 space-y-2">
+      {/* Navigation */}
+      <nav className="flex-1 p-3 space-y-1">
         {menuItems.map((item, index) => {
           const Icon = item.icon;
           return (
@@ -65,22 +68,20 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
               key={item.id}
               variant="ghost"
               onClick={() => setActiveTab(item.id)}
-              className={`w-full justify-start text-left transition-all duration-300 transform hover:translate-x-1 animate-[slideIn_0.5s_ease-out_forwards] ${
+              className={`w-full justify-start text-left h-11 px-3 transition-all duration-200 hover:bg-blue-50 ${
                 activeTab === item.id 
-                  ? 'bg-gradient-to-r from-green-600 to-green-500 text-white hover:from-green-700 hover:to-green-600 shadow-lg scale-105' 
-                  : 'text-gray-300 hover:bg-gray-800 hover:text-white hover:shadow-md'
+                  ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600 font-medium' 
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
               style={{ 
                 animationDelay: `${index * 50}ms`
               }}
             >
-              <Icon className={`h-5 w-5 transition-transform duration-300 ${
-                activeTab === item.id ? 'scale-110' : ''
+              <Icon className={`h-5 w-5 transition-colors duration-200 ${
+                activeTab === item.id ? 'text-blue-600' : 'text-gray-400'
               }`} />
               {!isCollapsed && (
-                <span className={`ml-3 transition-all duration-300 ${
-                  activeTab === item.id ? 'font-semibold' : ''
-                }`}>
+                <span className="ml-3 text-sm">
                   {item.label}
                 </span>
               )}
@@ -90,23 +91,21 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
       </nav>
 
       {/* Settings */}
-      <div className="p-4 border-t border-gray-700">
+      <div className="p-3 border-t border-gray-100">
         <Button
           variant="ghost"
           onClick={() => setActiveTab('settings')}
-          className={`w-full justify-start transition-all duration-300 transform hover:translate-x-1 ${
+          className={`w-full justify-start h-11 px-3 transition-all duration-200 hover:bg-blue-50 ${
             activeTab === 'settings'
-              ? 'bg-gradient-to-r from-green-600 to-green-500 text-white hover:from-green-700 hover:to-green-600 shadow-lg scale-105'
-              : 'text-gray-300 hover:bg-gray-800 hover:text-white hover:shadow-md'
+              ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600 font-medium'
+              : 'text-gray-600 hover:text-gray-900'
           }`}
         >
-          <Settings className={`h-5 w-5 transition-transform duration-300 ${
-            activeTab === 'settings' ? 'scale-110 rotate-90' : ''
+          <Settings className={`h-5 w-5 transition-colors duration-200 ${
+            activeTab === 'settings' ? 'text-blue-600' : 'text-gray-400'
           }`} />
           {!isCollapsed && (
-            <span className={`ml-3 transition-all duration-300 ${
-              activeTab === 'settings' ? 'font-semibold' : ''
-            }`}>
+            <span className="ml-3 text-sm">
               {t('common.settings')}
             </span>
           )}

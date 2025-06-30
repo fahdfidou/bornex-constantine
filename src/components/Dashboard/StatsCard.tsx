@@ -7,7 +7,7 @@ interface StatsCardProps {
   title: string;
   value: string | number;
   icon: LucideIcon;
-  change?: string;
+  trend?: string;
   changeType?: 'positive' | 'negative' | 'neutral';
   color?: string;
 }
@@ -16,9 +16,9 @@ const StatsCard: React.FC<StatsCardProps> = ({
   title, 
   value, 
   icon: Icon, 
-  change, 
-  changeType = 'neutral',
-  color = 'orange'
+  trend, 
+  changeType = 'positive',
+  color = 'blue'
 }) => {
   const getChangeColor = () => {
     switch (changeType) {
@@ -30,29 +30,30 @@ const StatsCard: React.FC<StatsCardProps> = ({
 
   const getIconColor = () => {
     switch (color) {
-      case 'orange': return 'text-orange-600 bg-orange-100';
-      case 'green': return 'text-green-600 bg-green-100';
-      case 'blue': return 'text-blue-600 bg-blue-100';
-      case 'red': return 'text-red-600 bg-red-100';
-      default: return 'text-gray-600 bg-gray-100';
+      case 'orange': return 'text-orange-600 bg-orange-50';
+      case 'green': return 'text-green-600 bg-green-50';
+      case 'blue': return 'text-blue-600 bg-blue-50';
+      case 'purple': return 'text-purple-600 bg-purple-50';
+      case 'red': return 'text-red-600 bg-red-50';
+      default: return 'text-gray-600 bg-gray-50';
     }
   };
 
   return (
-    <Card className="hover:shadow-lg transition-shadow duration-200">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+    <Card className="hover:shadow-md transition-all duration-200 border-gray-200 shadow-sm">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
         <CardTitle className="text-sm font-medium text-gray-600">
           {title}
         </CardTitle>
-        <div className={`p-2 rounded-full ${getIconColor()}`}>
+        <div className={`p-2.5 rounded-xl ${getIconColor()}`}>
           <Icon className="h-4 w-4" />
         </div>
       </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold text-gray-900">{value}</div>
-        {change && (
-          <p className={`text-xs ${getChangeColor()} mt-1`}>
-            {change}
+      <CardContent className="pt-0">
+        <div className="text-2xl font-bold text-gray-900 mb-1">{value}</div>
+        {trend && (
+          <p className={`text-xs font-medium ${getChangeColor()}`}>
+            {trend} ce mois
           </p>
         )}
       </CardContent>
