@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 type Language = 'fr' | 'ar' | 'en';
 
@@ -7,17 +7,19 @@ interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: (key: string) => string;
+  darkMode: boolean;
+  toggleDarkMode: () => void;
 }
 
 const translations = {
   fr: {
     // Navigation
-    'nav.dashboard': 'Tableau de bord',
-    'nav.map': 'Carte',
+    'nav.dashboard': 'Tableau de Bord',
+    'nav.map': 'Carte Interactive',
     'nav.maintenance': 'Maintenance',
     'nav.payments': 'Paiements',
     'nav.users': 'Utilisateurs',
-    'nav.analytics': 'Analytique',
+    'nav.analytics': 'Analytiques',
     
     // Welcome
     'welcome.title': 'Bienvenue sur BorneX',
@@ -26,12 +28,15 @@ const translations = {
     
     // Dashboard
     'dashboard.title': 'Tableau de Bord',
+    'dashboard.subtitle': 'Vue d\'ensemble de votre réseau de bornes',
     'dashboard.totalStations': 'Total des Bornes',
-    'dashboard.activeStations': 'Bornes Actives',
-    'dashboard.maintenance': 'En Maintenance',
+    'dashboard.activeCharging': 'Charges Actives',
+    'dashboard.totalUsers': 'Utilisateurs Totaux',
     'dashboard.revenue': 'Revenus du Jour',
     'dashboard.sessions': 'Sessions Actives',
     'dashboard.users': 'Utilisateurs Connectés',
+    'dashboard.recentActivity': 'Activité Récente',
+    'dashboard.systemStatus': 'État du Système',
     
     // Map
     'map.title': 'Carte Interactive',
@@ -40,12 +45,12 @@ const translations = {
     'map.offline': 'Hors ligne',
     'map.maintenance': 'Maintenance',
     'map.search': 'Rechercher une station...',
-    'map.myLocation': 'Ma position',
+    'map.myLocation': 'Ma Position',
     
     // Status
-    'status.online': 'En ligne',
-    'status.offline': 'Hors ligne',
-    'status.charging': 'En charge',
+    'status.online': 'En Ligne',
+    'status.offline': 'Hors Ligne',
+    'status.charging': 'En Charge',
     'status.available': 'Disponible',
     'status.maintenance': 'Maintenance',
     
@@ -57,11 +62,13 @@ const translations = {
     'common.filter': 'Filtrer',
     'common.export': 'Exporter',
     'common.settings': 'Paramètres',
+    'common.darkMode': 'Mode Sombre',
+    'common.lightMode': 'Mode Clair',
   },
   ar: {
     // Navigation
     'nav.dashboard': 'لوحة القيادة',
-    'nav.map': 'الخريطة',
+    'nav.map': 'الخريطة التفاعلية',
     'nav.maintenance': 'الصيانة',
     'nav.payments': 'المدفوعات',
     'nav.users': 'المستخدمون',
@@ -74,12 +81,15 @@ const translations = {
     
     // Dashboard
     'dashboard.title': 'لوحة القيادة',
+    'dashboard.subtitle': 'نظرة عامة على شبكة المحطات الخاصة بك',
     'dashboard.totalStations': 'إجمالي المحطات',
-    'dashboard.activeStations': 'المحطات النشطة',
-    'dashboard.maintenance': 'قيد الصيانة',
+    'dashboard.activeCharging': 'الشحن النشط',
+    'dashboard.totalUsers': 'إجمالي المستخدمين',
     'dashboard.revenue': 'إيرادات اليوم',
     'dashboard.sessions': 'الجلسات النشطة',
     'dashboard.users': 'المستخدمون المتصلون',
+    'dashboard.recentActivity': 'النشاط الأخير',
+    'dashboard.systemStatus': 'حالة النظام',
     
     // Map
     'map.title': 'الخريطة التفاعلية',
@@ -105,11 +115,13 @@ const translations = {
     'common.filter': 'تصفية',
     'common.export': 'تصدير',
     'common.settings': 'الإعدادات',
+    'common.darkMode': 'الوضع المظلم',
+    'common.lightMode': 'الوضع الفاتح',
   },
   en: {
     // Navigation
     'nav.dashboard': 'Dashboard',
-    'nav.map': 'Map',
+    'nav.map': 'Interactive Map',
     'nav.maintenance': 'Maintenance',
     'nav.payments': 'Payments',
     'nav.users': 'Users',
@@ -122,12 +134,15 @@ const translations = {
     
     // Dashboard
     'dashboard.title': 'Dashboard',
+    'dashboard.subtitle': 'Overview of your station network',
     'dashboard.totalStations': 'Total Stations',
-    'dashboard.activeStations': 'Active Stations',
-    'dashboard.maintenance': 'Under Maintenance',
+    'dashboard.activeCharging': 'Active Charging',
+    'dashboard.totalUsers': 'Total Users',
     'dashboard.revenue': 'Today\'s Revenue',
     'dashboard.sessions': 'Active Sessions',
     'dashboard.users': 'Connected Users',
+    'dashboard.recentActivity': 'Recent Activity',
+    'dashboard.systemStatus': 'System Status',
     
     // Map
     'map.title': 'Interactive Map',
@@ -135,7 +150,7 @@ const translations = {
     'map.occupied': 'Occupied',
     'map.offline': 'Offline',
     'map.maintenance': 'Maintenance',
-    'map.search': 'Search station...',
+    'map.search': 'Search Station...',
     'map.myLocation': 'My Location',
     
     // Status
@@ -153,6 +168,8 @@ const translations = {
     'common.filter': 'Filter',
     'common.export': 'Export',
     'common.settings': 'Settings',
+    'common.darkMode': 'Dark Mode',
+    'common.lightMode': 'Light Mode',
   },
 };
 
@@ -160,13 +177,34 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('fr');
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('darkMode');
+    if (savedTheme) {
+      setDarkMode(JSON.parse(savedTheme));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('darkMode', JSON.stringify(darkMode));
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
 
   const t = (key: string): string => {
     return translations[language][key as keyof typeof translations[typeof language]] || key;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, darkMode, toggleDarkMode }}>
       <div className={language === 'ar' ? 'rtl' : 'ltr'}>
         {children}
       </div>

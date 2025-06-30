@@ -22,7 +22,7 @@ const Index = () => {
     setTimeout(() => {
       setActiveTab(newTab);
       setTimeout(() => setIsTransitioning(false), 50);
-    }, 150);
+    }, 200);
   };
 
   const renderContent = () => {
@@ -48,14 +48,16 @@ const Index = () => {
 
   return (
     <LanguageProvider>
-      <div className="min-h-screen bg-gray-50 flex w-full">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex w-full transition-colors duration-300">
         <Sidebar activeTab={activeTab} setActiveTab={handleTabChange} />
         <div className="flex-1 flex flex-col">
           <Header />
           <main className="flex-1 p-6 relative overflow-hidden">
             <div 
-              className={`transition-all duration-300 ease-in-out ${
-                isTransitioning ? 'opacity-0 transform translate-y-4' : 'opacity-100 transform translate-y-0'
+              className={`transition-all duration-300 ease-in-out transform ${
+                isTransitioning 
+                  ? 'opacity-0 translate-y-8 scale-95' 
+                  : 'opacity-100 translate-y-0 scale-100'
               }`}
             >
               {renderContent()}
