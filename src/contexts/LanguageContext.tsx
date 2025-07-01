@@ -5,6 +5,8 @@ interface LanguageContextType {
   language: 'fr' | 'ar' | 'en';
   setLanguage: (lang: 'fr' | 'ar' | 'en') => void;
   t: (key: string) => string;
+  darkMode: boolean;
+  toggleDarkMode: () => void;
 }
 
 const translations = {
@@ -314,18 +316,36 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     return (saved as 'fr' | 'ar' | 'en') || 'fr';
   });
 
+  const [darkMode, setDarkMode] = useState<boolean>(() => {
+    const saved = localStorage.getItem('dark-mode');
+    return saved === 'true';
+  });
+
   useEffect(() => {
     localStorage.setItem('preferred-language', language);
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = language;
   }, [language]);
 
+  useEffect(() => {
+    localStorage.setItem('dark-mode', darkMode.toString());
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
   const t = (key: string): string => {
     return translations[language][key] || key;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, darkMode, toggleDarkMode }}>
       {children}
     </LanguageContext.Provider>
   );
