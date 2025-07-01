@@ -4,11 +4,12 @@ import { LanguageProvider } from '../contexts/LanguageContext';
 import Header from '../components/Layout/Header';
 import Sidebar from '../components/Layout/Sidebar';
 import Dashboard from '../components/Dashboard/Dashboard';
-import InteractiveMap from '../components/Map/InteractiveMap';
+import StationsPage from '../components/Stations/StationsPage';
+import MonitoringPage from '../components/Monitoring/MonitoringPage';
 import MaintenancePage from '../components/Maintenance/MaintenancePage';
-import PaymentsPage from '../components/Payments/PaymentsPage';
 import UsersPage from '../components/Users/UsersPage';
 import AnalyticsPage from '../components/Analytics/AnalyticsPage';
+import InventoryPage from '../components/Inventory/InventoryPage';
 import SettingsPage from '../components/Settings/SettingsPage';
 
 const Index = () => {
@@ -29,16 +30,18 @@ const Index = () => {
     switch (activeTab) {
       case 'dashboard':
         return <Dashboard />;
-      case 'map':
-        return <InteractiveMap />;
+      case 'stations':
+        return <StationsPage />;
+      case 'monitoring':
+        return <MonitoringPage />;
       case 'maintenance':
         return <MaintenancePage />;
-      case 'payments':
-        return <PaymentsPage />;
       case 'users':
         return <UsersPage />;
       case 'analytics':
         return <AnalyticsPage />;
+      case 'inventory':
+        return <InventoryPage />;
       case 'settings':
         return <SettingsPage />;
       default:

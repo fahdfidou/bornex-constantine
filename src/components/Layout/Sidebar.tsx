@@ -2,9 +2,10 @@
 import React from 'react';
 import { 
   LayoutDashboard, 
-  Map, 
+  Power, 
+  Monitor, 
   Wrench, 
-  CreditCard, 
+  Package, 
   Users, 
   BarChart3,
   Settings,
@@ -26,11 +27,12 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
 
   const menuItems = [
     { id: 'dashboard', icon: LayoutDashboard, label: t('nav.dashboard') },
-    { id: 'map', icon: Map, label: t('nav.map') },
+    { id: 'stations', icon: Power, label: t('nav.stations') },
+    { id: 'monitoring', icon: Monitor, label: t('nav.monitoring') },
     { id: 'maintenance', icon: Wrench, label: t('nav.maintenance') },
-    { id: 'payments', icon: CreditCard, label: t('nav.payments') },
     { id: 'users', icon: Users, label: t('nav.users') },
     { id: 'analytics', icon: BarChart3, label: t('nav.analytics') },
+    { id: 'inventory', icon: Package, label: t('nav.inventory') },
   ];
 
   return (
@@ -45,7 +47,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
               <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">B</span>
               </div>
-              <span className="font-semibold text-gray-900 dark:text-white transition-colors duration-200">BorneX</span>
+              <span className="font-semibold text-gray-900 dark:text-white transition-colors duration-200">BorneX Pro</span>
             </div>
           )}
           <Button

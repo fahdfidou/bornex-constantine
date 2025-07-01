@@ -2,7 +2,7 @@
 import React from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import StatsCard from './StatsCard';
-import { Battery, Zap, Users, TrendingUp, MapPin, AlertTriangle } from 'lucide-react';
+import { Power, Zap, Users, TrendingUp, AlertTriangle, Activity } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import ChargingStationImage from '../UI/ChargingStationImage';
 
@@ -12,28 +12,28 @@ const Dashboard = () => {
   const stats = [
     {
       title: t('dashboard.totalStations'),
-      value: '156',
-      icon: MapPin,
-      trend: '+12%',
+      value: '24',
+      icon: Power,
+      trend: '+3%',
       color: 'blue'
     },
     {
-      title: t('dashboard.activeCharging'),
-      value: '89',
+      title: t('dashboard.activeStations'),
+      value: '21',
       icon: Zap,
       trend: '+8%',
       color: 'green'
     },
     {
-      title: t('dashboard.totalUsers'),
-      value: '2,847',
+      title: t('dashboard.totalTechnicians'),
+      value: '12',
       icon: Users,
-      trend: '+23%',
+      trend: '+2%',
       color: 'purple'
     },
     {
       title: t('dashboard.revenue'),
-      value: '124,560 DA',
+      value: '485,200 DA',
       icon: TrendingUp,
       trend: '+15%',
       color: 'orange'
@@ -41,10 +41,10 @@ const Dashboard = () => {
   ];
 
   const recentActivity = [
-    { id: 1, station: t('stations.centreville'), user: 'Ahmed B.', status: 'completed', time: '5 min' },
-    { id: 2, station: t('stations.university'), user: 'Fatima K.', status: 'charging', time: '12 min' },
-    { id: 3, station: t('stations.airport'), user: 'Mohamed A.', status: 'completed', time: '18 min' },
-    { id: 4, station: t('stations.port'), user: 'Amina D.', status: 'charging', time: '25 min' }
+    { id: 1, station: t('stations.centreville'), activity: 'Maintenance préventive terminée', status: 'completed', time: '5 min' },
+    { id: 2, station: t('stations.university'), activity: 'Nouvelle session de charge démarrée', status: 'active', time: '12 min' },
+    { id: 3, station: t('stations.airport'), activity: 'Mise à jour firmware installée', status: 'completed', time: '18 min' },
+    { id: 4, station: t('stations.industrial'), activity: 'Alerte température résolvée', status: 'resolved', time: '25 min' }
   ];
 
   return (
@@ -111,11 +111,11 @@ const Dashboard = () => {
           <Card className="shadow-sm border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm transition-colors duration-200">
             <CardHeader className="pb-4">
               <CardTitle className="flex items-center space-x-2 text-lg text-gray-900 dark:text-white transition-colors duration-200">
-                <Battery className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                <Activity className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                 <span>{t('dashboard.recentActivity')}</span>
               </CardTitle>
               <CardDescription className="text-sm text-gray-500 dark:text-gray-400 transition-colors duration-200">
-                {t('dashboard.lastSessions')}
+                Activités récentes du système
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -123,19 +123,22 @@ const Dashboard = () => {
                 <div key={activity.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
                   <div className="flex items-center space-x-3">
                     <div className={`w-2 h-2 rounded-full ${
-                      activity.status === 'charging' ? 'bg-blue-500 animate-pulse' : 'bg-green-500'
+                      activity.status === 'active' ? 'bg-blue-500 animate-pulse' : 
+                      activity.status === 'completed' ? 'bg-green-500' : 'bg-yellow-500'
                     }`}></div>
                     <div>
                       <p className="font-medium text-gray-900 dark:text-white text-sm transition-colors duration-200">{activity.station}</p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 transition-colors duration-200">{activity.user}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 transition-colors duration-200">{activity.activity}</p>
                     </div>
                   </div>
                   <div className="text-right">
                     <p className="text-xs font-medium text-gray-900 dark:text-white transition-colors duration-200">{activity.time}</p>
                     <p className={`text-xs ${
-                      activity.status === 'charging' ? 'text-blue-600 dark:text-blue-400' : 'text-green-600 dark:text-green-400'
+                      activity.status === 'active' ? 'text-blue-600 dark:text-blue-400' : 
+                      activity.status === 'completed' ? 'text-green-600 dark:text-green-400' : 'text-yellow-600 dark:text-yellow-400'
                     } transition-colors duration-200`}>
-                      {activity.status === 'charging' ? t('dashboard.inProgress') : t('dashboard.completed')}
+                      {activity.status === 'active' ? t('dashboard.inProgress') : 
+                       activity.status === 'completed' ? t('dashboard.completed') : 'Résolu'}
                     </p>
                   </div>
                 </div>
@@ -151,7 +154,7 @@ const Dashboard = () => {
                 <span>{t('dashboard.systemStatus')}</span>
               </CardTitle>
               <CardDescription className="text-sm text-gray-500 dark:text-gray-400 transition-colors duration-200">
-                {t('dashboard.stationsMaintenanceStatus')}
+                État des bornes et alertes système
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -159,12 +162,12 @@ const Dashboard = () => {
                 <div className="flex items-center space-x-3">
                   <AlertTriangle className="h-4 w-4 text-orange-500" />
                   <div>
-                    <p className="font-medium text-gray-900 dark:text-white text-sm transition-colors duration-200">{t('stations.university')}</p>
-                    <p className="text-xs text-gray-600 dark:text-gray-400 transition-colors duration-200">{t('dashboard.scheduledMaintenance')}</p>
+                    <p className="font-medium text-gray-900 dark:text-white text-sm transition-colors duration-200">{t('stations.airport')}</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400 transition-colors duration-200">Maintenance requise - Connecteur défaillant</p>
                   </div>
                 </div>
                 <span className="text-xs bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full font-medium transition-colors duration-200">
-                  {t('dashboard.tomorrow9am')}
+                  Urgent
                 </span>
               </div>
               
@@ -172,12 +175,12 @@ const Dashboard = () => {
                 <div className="flex items-center space-x-3">
                   <div className="w-4 h-4 bg-green-500 rounded-full"></div>
                   <div>
-                    <p className="font-medium text-gray-900 dark:text-white text-sm transition-colors duration-200">{t('dashboard.globalNetwork')}</p>
-                    <p className="text-xs text-gray-600 dark:text-gray-400 transition-colors duration-200">{t('dashboard.optimalOperation')}</p>
+                    <p className="font-medium text-gray-900 dark:text-white text-sm transition-colors duration-200">Réseau de bornes</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400 transition-colors duration-200">Fonctionnement optimal - 21/24 bornes actives</p>
                   </div>
                 </div>
                 <span className="text-xs bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 px-2 py-1 rounded-full font-medium transition-colors duration-200">
-                  96.8%
+                  87.5%
                 </span>
               </div>
 
@@ -185,12 +188,12 @@ const Dashboard = () => {
                 <div className="flex items-center space-x-3">
                   <Zap className="h-4 w-4 text-blue-500" />
                   <div>
-                    <p className="font-medium text-gray-900 dark:text-white text-sm transition-colors duration-200">{t('dashboard.activeSessions')}</p>
-                    <p className="text-xs text-gray-600 dark:text-gray-400 transition-colors duration-200">{t('dashboard.connectedUsers')}</p>
+                    <p className="font-medium text-gray-900 dark:text-white text-sm transition-colors duration-200">Consommation énergétique</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400 transition-colors duration-200">Puissance actuelle du réseau</p>
                   </div>
                 </div>
                 <span className="text-xs bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 px-2 py-1 rounded-full font-medium transition-colors duration-200">
-                  89 {t('dashboard.active')}
+                  645 kW
                 </span>
               </div>
             </CardContent>
