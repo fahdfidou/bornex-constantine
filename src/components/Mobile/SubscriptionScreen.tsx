@@ -18,8 +18,8 @@ const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({ setActiveTab })
   const plans = {
     basic: {
       name: language === 'ar' ? 'الباقة الأساسية' : language === 'fr' ? 'Plan Basique' : 'Basic Plan',
-      monthlyPrice: 19.99,
-      yearlyPrice: 199.99,
+      monthlyPrice: 2500,
+      yearlyPrice: 25000,
       color: 'from-blue-500 to-blue-600',
       icon: Car,
       features: [
@@ -31,8 +31,8 @@ const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({ setActiveTab })
     },
     premium: {
       name: language === 'ar' ? 'الباقة المميزة' : language === 'fr' ? 'Plan Premium' : 'Premium Plan',
-      monthlyPrice: 39.99,
-      yearlyPrice: 399.99,
+      monthlyPrice: 5000,
+      yearlyPrice: 50000,
       color: 'from-purple-500 to-purple-600',
       icon: Zap,
       popular: true,
@@ -46,8 +46,8 @@ const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({ setActiveTab })
     },
     ultra: {
       name: language === 'ar' ? 'الباقة الفائقة' : language === 'fr' ? 'Plan Ultra' : 'Ultra Plan',
-      monthlyPrice: 69.99,
-      yearlyPrice: 699.99,
+      monthlyPrice: 8500,
+      yearlyPrice: 85000,
       color: 'from-yellow-500 to-orange-500',
       icon: Crown,
       features: [
@@ -161,7 +161,7 @@ const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({ setActiveTab })
                           <h3 className="font-bold text-lg">{plan.name}</h3>
                           <div className="flex items-baseline gap-1">
                             <span className="text-2xl font-bold">
-                              {getCurrentPrice(plan)}€
+                              {getCurrentPrice(plan)} DA
                             </span>
                             <span className="text-sm opacity-80">
                               /{billingCycle === 'monthly' ? 
@@ -206,10 +206,10 @@ const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({ setActiveTab })
             >
               <Crown className="h-5 w-5 mr-2" />
               {language === 'ar' ? 
-                `اشترك في ${plans[selectedPlan].name} - ${getCurrentPrice(plans[selectedPlan])}€` :
+                `اشترك في ${plans[selectedPlan].name} - ${getCurrentPrice(plans[selectedPlan])} DA` :
                 language === 'fr' ? 
-                `S'abonner ${plans[selectedPlan].name} - ${getCurrentPrice(plans[selectedPlan])}€` :
-                `Subscribe to ${plans[selectedPlan].name} - ${getCurrentPrice(plans[selectedPlan])}€`
+                `S'abonner ${plans[selectedPlan].name} - ${getCurrentPrice(plans[selectedPlan])} DA` :
+                `Subscribe to ${plans[selectedPlan].name} - ${getCurrentPrice(plans[selectedPlan])} DA`
               }
             </Button>
             

@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 const Header = () => {
-  const { language, setLanguage, t, darkMode, toggleDarkMode } = useLanguage();
+  const { language, setLanguage, darkMode, toggleDarkMode } = useLanguage();
 
   const languages = [
     { code: 'fr', name: 'Français', flag: '🇫🇷', nativeName: 'Français' },
@@ -71,7 +71,7 @@ const Header = () => {
                 {languages.map((lang) => (
                   <DropdownMenuItem
                     key={lang.code}
-                    onClick={() => setLanguage(lang.code as any)}
+                    onClick={() => setLanguage(lang.code as 'fr' | 'ar' | 'en')}
                     className={`flex items-center space-x-3 px-4 py-3 dark:text-white dark:hover:bg-gray-700 transition-colors duration-200 cursor-pointer ${
                       language === lang.code 
                         ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 font-medium' 
