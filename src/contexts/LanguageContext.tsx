@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface LanguageContextType {
@@ -135,6 +134,37 @@ const translations = {
     'common.kw': 'kW',
     'common.kwh': 'kWh',
     'common.euro': '€',
+    
+    // Dashboard
+    'dashboard.title': 'Tableau de bord',
+    'dashboard.totalStations': 'Stations totales',
+    'dashboard.activeStations': 'Stations actives',
+    
+    // Status
+    'status.operational': 'Opérationnel',
+    'status.charging': 'En charge',
+    'status.maintenance': 'Maintenance',
+    
+    // Stations
+    'stations.title': 'Gestion des Stations',
+    'stations.subtitle': 'Surveillez et contrôlez vos stations de recharge',
+    'stations.addStation': 'Ajouter une station',
+    'stations.centreville': 'Station Centre-ville',
+    'stations.university': 'Station Université',
+    'stations.airport': 'Station Aéroport',
+    'stations.industrial': 'Station Zone Industrielle',
+    'stations.batteryLevel': 'Niveau batterie',
+    'stations.powerOutput': 'Puissance de sortie',
+    'stations.connectorType': 'Type de connecteur',
+    'stations.operationalTime': 'Temps opérationnel',
+    'stations.viewDetails': 'Voir détails',
+    'stations.configure': 'Configurer',
+    'stations.remoteControl': 'Contrôle à distance',
+    
+    // Common
+    'common.profile': 'Profil',
+    'common.settings': 'Paramètres',
+    'common.logout': 'Déconnexion',
   },
   ar: {
     // Navigation
@@ -261,6 +291,37 @@ const translations = {
     'common.kw': 'كيلو واط',
     'common.kwh': 'كيلو واط ساعة',
     'common.euro': '€',
+    
+    // Dashboard
+    'dashboard.title': 'لوحة التحكم',
+    'dashboard.totalStations': 'إجمالي المحطات',
+    'dashboard.activeStations': 'المحطات النشطة',
+    
+    // Status
+    'status.operational': 'تعمل',
+    'status.charging': 'قيد الشحن',
+    'status.maintenance': 'صيانة',
+    
+    // Stations
+    'stations.title': 'إدارة المحطات',
+    'stations.subtitle': 'راقب وتحكم في محطات الشحن الخاصة بك',
+    'stations.addStation': 'إضافة محطة',
+    'stations.centreville': 'محطة وسط المدينة',
+    'stations.university': 'محطة الجامعة',
+    'stations.airport': 'محطة المطار',
+    'stations.industrial': 'محطة المنطقة الصناعية',
+    'stations.batteryLevel': 'مستوى البطارية',
+    'stations.powerOutput': 'قوة الإخراج',
+    'stations.connectorType': 'نوع الموصل',
+    'stations.operationalTime': 'وقت التشغيل',
+    'stations.viewDetails': 'عرض التفاصيل',
+    'stations.configure': 'تكوين',
+    'stations.remoteControl': 'التحكم عن بعد',
+    
+    // Common
+    'common.profile': 'الملف الشخصي',
+    'common.settings': 'الإعدادات',
+    'common.logout': 'تسجيل الخروج',
   },
   en: {
     // Navigation
@@ -387,6 +448,37 @@ const translations = {
     'common.kw': 'kW',
     'common.kwh': 'kWh',
     'common.euro': '€',
+    
+    // Dashboard
+    'dashboard.title': 'Dashboard',
+    'dashboard.totalStations': 'Total Stations',
+    'dashboard.activeStations': 'Active Stations',
+    
+    // Status
+    'status.operational': 'Operational',
+    'status.charging': 'Charging',
+    'status.maintenance': 'Maintenance',
+    
+    // Stations
+    'stations.title': 'Station Management',
+    'stations.subtitle': 'Monitor and control your charging stations',
+    'stations.addStation': 'Add Station',
+    'stations.centreville': 'Downtown Station',
+    'stations.university': 'University Station',
+    'stations.airport': 'Airport Station',
+    'stations.industrial': 'Industrial Zone Station',
+    'stations.batteryLevel': 'Battery Level',
+    'stations.powerOutput': 'Power Output',
+    'stations.connectorType': 'Connector Type',
+    'stations.operationalTime': 'Operational Time',
+    'stations.viewDetails': 'View Details',
+    'stations.configure': 'Configure',
+    'stations.remoteControl': 'Remote Control',
+    
+    // Common
+    'common.profile': 'Profile',
+    'common.settings': 'Settings',
+    'common.logout': 'Logout',
   }
 };
 

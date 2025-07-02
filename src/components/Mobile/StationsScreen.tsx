@@ -16,9 +16,8 @@ const StationsScreen: React.FC<StationsScreenProps> = ({ setActiveTab }) => {
   const { t, language } = useLanguage();
   const [selectedStation, setSelectedStation] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [showMap, setShowMap] = useState(false);
+  const [showMap, setShowMap] = useState(true);
   const mapRef = useRef<HTMLDivElement>(null);
-  const [userLocation, setUserLocation] = useState<{lat: number, lng: number} | null>(null);
 
   const stations = [
     {
@@ -105,28 +104,80 @@ const StationsScreen: React.FC<StationsScreenProps> = ({ setActiveTab }) => {
     }
   };
 
-  const getUserLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setUserLocation({ lat: latitude, lng: longitude });
-        },
-        (error) => {
-          console.error('Erreur de géolocalisation:', error);
-        }
-      );
-    }
-  };
-
-  useEffect(() => {
-    getUserLocation();
-  }, []);
-
   const filteredStations = stations.filter(station =>
     station.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     station.address.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  // Initialize Google Maps
+  useEffect(() => {
+    if (showMap && mapRef.current) {
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places`;
+      script.async = true;
+      script.defer = true;
+      
+      script.onload = () => {
+        const map = new window.google.maps.Map(mapRef.current, {
+          center: { lat: 36.3650, lng: 6.6147 },
+          zoom: 12,
+          styles: [
+            {
+              featureType: 'all',
+              elementType: 'geometry.fill',
+              stylers: [{ color: '#f5f5f5' }]
+            },
+            {
+              featureType: 'water',
+              elementType: 'geometry.fill',
+              stylers: [{ color: '#e3f2fd' }]
+            }
+          ]
+        });
+
+        // Add markers for each station
+        filteredStations.forEach(station => {
+          const marker = new window.google.maps.Marker({
+            position: station.coordinates,
+            map: map,
+            title: station.name,
+            icon: {
+              url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+                <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="20" cy="20" r="18" fill="${station.status === 'available' ? '#10b981' : station.status === 'occupied' ? '#ef4444' : '#f59e0b'}" stroke="white" stroke-width="2"/>
+                  <text x="20" y="25" text-anchor="middle" fill="white" font-size="12" font-weight="bold">⚡</text>
+                </svg>
+              `)}`,
+              scaledSize: new window.google.maps.Size(40, 40)
+            }
+          });
+
+          const infoWindow = new window.google.maps.InfoWindow({
+            content: `
+              <div style="padding: 10px; min-width: 200px;">
+                <h3 style="margin: 0 0 8px 0; font-size: 16px; font-weight: bold;">${station.name}</h3>
+                <p style="margin: 0 0 4px 0; color: #666; font-size: 14px;">${station.address}</p>
+                <div style="display: flex; justify-content: space-between; margin: 8px 0;">
+                  <span style="background: ${station.status === 'available' ? '#10b981' : station.status === 'occupied' ? '#ef4444' : '#f59e0b'}; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px;">${getStatusText(station.status)}</span>
+                  <span style="font-weight: bold;">${station.power}</span>
+                </div>
+                <p style="margin: 4px 0 0 0; font-size: 14px; color: #888;">${station.price}</p>
+              </div>
+            `
+          });
+
+          marker.addListener('click', () => {
+            infoWindow.open(map, marker);
+            setSelectedStation(station);
+          });
+        });
+      };
+
+      if (!document.querySelector('script[src*="maps.googleapis.com"]')) {
+        document.head.appendChild(script);
+      }
+    }
+  }, [showMap, filteredStations]);
 
   return (
     <div className="flex-1 bg-gradient-to-br from-blue-50/50 via-white to-green-50/50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -149,14 +200,6 @@ const StationsScreen: React.FC<StationsScreenProps> = ({ setActiveTab }) => {
               {t('map.chargingStationsConstantine')}
             </p>
           </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setShowMap(!showMap)}
-            className="p-2"
-          >
-            <MapPin className="h-5 w-5" />
-          </Button>
         </div>
       </div>
 
@@ -180,7 +223,10 @@ const StationsScreen: React.FC<StationsScreenProps> = ({ setActiveTab }) => {
         {/* Legend */}
         <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200/50 dark:border-gray-700/50">
           <CardContent className="p-3">
-            <div className="flex items-center justify-between text-xs">
+            <h3 className="font-semibold text-sm mb-2 text-gray-900 dark:text-white">
+              {language === 'ar' ? 'وصف الخريطة' : language === 'fr' ? 'Légende de la carte' : 'Map Legend'}
+            </h3>
+            <div className="grid grid-cols-3 gap-2 text-xs">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                 <span className="text-gray-600 dark:text-gray-300">{t('map.available')}</span>
@@ -198,44 +244,18 @@ const StationsScreen: React.FC<StationsScreenProps> = ({ setActiveTab }) => {
         </Card>
       </div>
 
-      {/* Map View */}
-      {showMap && (
-        <div className="mx-4 mb-4">
-          <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200/50 dark:border-gray-700/50">
-            <CardContent className="p-0">
-              <div 
-                ref={mapRef}
-                className="w-full h-64 bg-gradient-to-br from-blue-100 to-green-100 dark:from-gray-700 dark:to-gray-600 rounded-lg flex items-center justify-center relative overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-opacity-20"></div>
-                
-                {/* Stations sur la carte */}
-                {filteredStations.map((station, index) => (
-                  <div
-                    key={station.id}
-                    className={`absolute w-6 h-6 ${getStatusColor(station.status)} rounded-full border-2 border-white shadow-lg cursor-pointer hover:scale-110 transition-transform animate-pulse`}
-                    style={{
-                      left: `${20 + (index * 15)}%`,
-                      top: `${30 + (index % 2 * 20)}%`,
-                    }}
-                    onClick={() => setSelectedStation(station)}
-                  />
-                ))}
-                
-                <div className="text-center z-10">
-                  <MapPin className="h-12 w-12 text-blue-500 mx-auto mb-2" />
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
-                    {t('map.chargingStationsConstantine')}
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                    Carte interactive - Cliquez sur les points
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
+      {/* Google Maps */}
+      <div className="mx-4 mb-4">
+        <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200/50 dark:border-gray-700/50">
+          <CardContent className="p-0">
+            <div 
+              ref={mapRef}
+              className="w-full h-80 rounded-lg"
+              style={{ minHeight: '320px' }}
+            />
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Statistics */}
       <div className="px-4 mb-4">
