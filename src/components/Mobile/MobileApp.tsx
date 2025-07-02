@@ -4,6 +4,7 @@ import { LanguageProvider } from '../../contexts/LanguageContext';
 import IntroScreen from './IntroScreen';
 import MobileNavigation from './MobileNavigation';
 import HomeScreen from './HomeScreen';
+import StationsScreen from './StationsScreen';
 import ChargingScreen from './ChargingScreen';
 import SubscriptionScreen from './SubscriptionScreen';
 import ProfileScreen from './ProfileScreen';
@@ -22,7 +23,7 @@ const MobileApp = () => {
       case 'home':
         return <HomeScreen setActiveTab={setActiveTab} />;
       case 'stations':
-        return <HomeScreen setActiveTab={setActiveTab} />;
+        return <StationsScreen setActiveTab={setActiveTab} />;
       case 'charging':
         return <ChargingScreen setActiveTab={setActiveTab} />;
       case 'subscription':

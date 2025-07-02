@@ -20,6 +20,26 @@ const translations = {
     'nav.settings': 'Paramètres',
     'nav.help': 'Aide',
     
+    // Map translations
+    'map.title': 'Carte des Stations',
+    'map.search': 'Rechercher une station...',
+    'map.myLocation': 'Ma position',
+    'map.available': 'Disponible',
+    'map.occupied': 'Occupée',
+    'map.maintenance': 'Maintenance',
+    'map.selectStation': 'Sélectionner une station',
+    'map.clickStation': 'Cliquez sur une station pour voir les détails',
+    'map.address': 'Adresse',
+    'map.power': 'Puissance',
+    'map.rate': 'Tarif',
+    'map.reserveStation': 'Réserver cette station',
+    'map.statistics': 'Statistiques',
+    'map.nearbyStations': 'Stations à proximité',
+    'map.chargingStationsConstantine': 'Stations de recharge - Constantine',
+    'map.enterMapboxToken': 'Veuillez entrer votre token Mapbox pour afficher la carte',
+    'map.confirm': 'Confirmer',
+    'map.getTokenFrom': 'Obtenez votre token depuis',
+    
     // Home Screen
     'home.title': 'Trouvez votre station',
     'home.subtitle': 'Rechargez votre véhicule électrique facilement',
@@ -97,16 +117,6 @@ const translations = {
     'settings.terms': 'Conditions d\'utilisation',
     'settings.about': 'À propos',
     
-    // Help & FAQ
-    'help.title': 'Aide et FAQ',
-    'help.searchPlaceholder': 'Rechercher dans l\'aide...',
-    'help.gettingStarted': 'Commencer',
-    'help.charging': 'Recharge',
-    'help.subscription': 'Abonnement',
-    'help.technical': 'Technique',
-    'help.contactSupport': 'Contacter le support',
-    'help.livechat': 'Chat en direct',
-    
     // Common
     'common.loading': 'Chargement...',
     'common.error': 'Erreur',
@@ -135,6 +145,26 @@ const translations = {
     'nav.profile': 'الملف الشخصي',
     'nav.settings': 'الإعدادات',
     'nav.help': 'المساعدة',
+    
+    // Map translations
+    'map.title': 'خريطة المحطات',
+    'map.search': 'البحث عن محطة...',
+    'map.myLocation': 'موقعي',
+    'map.available': 'متاحة',
+    'map.occupied': 'مشغولة',
+    'map.maintenance': 'صيانة',
+    'map.selectStation': 'اختر محطة',
+    'map.clickStation': 'انقر على محطة لمشاهدة التفاصيل',
+    'map.address': 'العنوان',
+    'map.power': 'القوة',
+    'map.rate': 'السعر',
+    'map.reserveStation': 'احجز هذه المحطة',
+    'map.statistics': 'الإحصائيات',
+    'map.nearbyStations': 'المحطات القريبة',
+    'map.chargingStationsConstantine': 'محطات الشحن - قسنطينة',
+    'map.enterMapboxToken': 'يرجى إدخال رمز Mapbox لعرض الخريطة',
+    'map.confirm': 'تأكيد',
+    'map.getTokenFrom': 'احصل على الرمز من',
     
     // Home Screen
     'home.title': 'اعثر على محطتك',
@@ -213,16 +243,6 @@ const translations = {
     'settings.terms': 'شروط الاستخدام',
     'settings.about': 'حول',
     
-    // Help & FAQ
-    'help.title': 'المساعدة والأسئلة الشائعة',
-    'help.searchPlaceholder': 'البحث في المساعدة...',
-    'help.gettingStarted': 'البدء',
-    'help.charging': 'الشحن',
-    'help.subscription': 'الاشتراك',
-    'help.technical': 'تقني',
-    'help.contactSupport': 'اتصل بالدعم',
-    'help.livechat': 'دردشة مباشرة',
-    
     // Common
     'common.loading': 'جاري التحميل...',
     'common.error': 'خطأ',
@@ -251,6 +271,26 @@ const translations = {
     'nav.profile': 'Profile',
     'nav.settings': 'Settings',
     'nav.help': 'Help',
+    
+    // Map translations
+    'map.title': 'Stations Map',
+    'map.search': 'Search for a station...',
+    'map.myLocation': 'My Location',
+    'map.available': 'Available',
+    'map.occupied': 'Occupied',
+    'map.maintenance': 'Maintenance',
+    'map.selectStation': 'Select a station',
+    'map.clickStation': 'Click on a station to see details',
+    'map.address': 'Address',
+    'map.power': 'Power',
+    'map.rate': 'Rate',
+    'map.reserveStation': 'Reserve this station',
+    'map.statistics': 'Statistics',
+    'map.nearbyStations': 'Nearby Stations',
+    'map.chargingStationsConstantine': 'Charging Stations - Constantine',
+    'map.enterMapboxToken': 'Please enter your Mapbox token to display the map',
+    'map.confirm': 'Confirm',
+    'map.getTokenFrom': 'Get your token from',
     
     // Home Screen
     'home.title': 'Find your station',
@@ -328,16 +368,6 @@ const translations = {
     'settings.privacy': 'Privacy',
     'settings.terms': 'Terms of use',
     'settings.about': 'About',
-    
-    // Help & FAQ
-    'help.title': 'Help & FAQ',
-    'help.searchPlaceholder': 'Search in help...',
-    'help.gettingStarted': 'Getting started',
-    'help.charging': 'Charging',
-    'help.subscription': 'Subscription',
-    'help.technical': 'Technical',
-    'help.contactSupport': 'Contact support',
-    'help.livechat': 'Live chat',
     
     // Common
     'common.loading': 'Loading...',
