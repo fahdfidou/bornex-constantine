@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { LanguageProvider } from '../../contexts/LanguageContext';
+import IntroScreen from './IntroScreen';
 import MobileNavigation from './MobileNavigation';
 import HomeScreen from './HomeScreen';
 import ChargingScreen from './ChargingScreen';
@@ -9,7 +10,12 @@ import ProfileScreen from './ProfileScreen';
 import SettingsScreen from './SettingsScreen';
 
 const MobileApp = () => {
+  const [showIntro, setShowIntro] = useState(true);
   const [activeTab, setActiveTab] = useState('home');
+
+  const handleIntroComplete = () => {
+    setShowIntro(false);
+  };
 
   const renderScreen = () => {
     switch (activeTab) {
@@ -29,6 +35,14 @@ const MobileApp = () => {
         return <HomeScreen setActiveTab={setActiveTab} />;
     }
   };
+
+  if (showIntro) {
+    return (
+      <LanguageProvider>
+        <IntroScreen onComplete={handleIntroComplete} />
+      </LanguageProvider>
+    );
+  }
 
   return (
     <LanguageProvider>
