@@ -96,7 +96,7 @@ const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({ setActiveTab })
                   <div className="text-sm opacity-80 mb-2">
                     {plan.period}
                   </div>
-                  {plan.monthlyEquivalent && (
+                  {'monthlyEquivalent' in plan && (
                     <div className="text-xs opacity-70">
                       {plan.monthlyEquivalent}€/mois
                     </div>
