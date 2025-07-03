@@ -104,6 +104,9 @@ const translations = {
     
     // Settings
     'settings.title': 'Paramètres',
+    'settings.preferences': 'Préférences',
+    'settings.support': 'Support',
+    'settings.changeLanguage': 'Changer la langue',
     'settings.language': 'Langue',
     'settings.theme': 'Thème',
     'settings.lightMode': 'Mode clair',
@@ -115,6 +118,9 @@ const translations = {
     'settings.privacy': 'Confidentialité',
     'settings.terms': 'Conditions d\'utilisation',
     'settings.about': 'À propos',
+    
+    // Help
+    'help.title': 'Aide',
     
     // Common
     'common.loading': 'Chargement...',
@@ -261,6 +267,9 @@ const translations = {
     
     // Settings
     'settings.title': 'الإعدادات',
+    'settings.preferences': 'التفضيلات',
+    'settings.support': 'الدعم',
+    'settings.changeLanguage': 'تغيير اللغة',
     'settings.language': 'اللغة',
     'settings.theme': 'السمة',
     'settings.lightMode': 'الوضع الفاتح',
@@ -272,6 +281,9 @@ const translations = {
     'settings.privacy': 'الخصوصية',
     'settings.terms': 'شروط الاستخدام',
     'settings.about': 'حول',
+    
+    // Help
+    'help.title': 'المساعدة',
     
     // Common
     'common.loading': 'جاري التحميل...',
@@ -418,6 +430,9 @@ const translations = {
     
     // Settings
     'settings.title': 'Settings',
+    'settings.preferences': 'Preferences',
+    'settings.support': 'Support',
+    'settings.changeLanguage': 'Change Language',
     'settings.language': 'Language',
     'settings.theme': 'Theme',
     'settings.lightMode': 'Light mode',
@@ -429,6 +444,9 @@ const translations = {
     'settings.privacy': 'Privacy',
     'settings.terms': 'Terms of use',
     'settings.about': 'About',
+    
+    // Help
+    'help.title': 'Help',
     
     // Common
     'common.loading': 'Loading...',
