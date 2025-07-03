@@ -40,7 +40,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     power: '22 kW',
     type: 'Type 2',
     rating: 4.7,
-    price: '0.25€/kWh',
+    price: '35 DZA/kWh',
     amenities: ['Hôtel', 'Restaurant', 'WiFi']
   }, {
     id: 2,
@@ -51,7 +51,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     power: '50 kW',
     type: 'CCS',
     rating: 4.5,
-    price: '0.30€/kWh',
+    price: '42 DZA/kWh',
     amenities: ['Parking', 'Cafétéria', 'Sécurité']
   }, {
     id: 3,
@@ -62,7 +62,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     power: '22 kW',
     type: 'Type 2',
     rating: 4.6,
-    price: '0.25€/kWh',
+    price: '35 DZA/kWh',
     amenities: ['Parking', 'Bibliothèque', 'WiFi']
   }, {
     id: 4,
@@ -73,7 +73,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     power: '150 kW',
     type: 'CCS Combo',
     rating: 4.8,
-    price: '0.35€/kWh',
+    price: '49 DZA/kWh',
     amenities: ['Centre Commercial', 'Parking', 'Restaurant']
   }, {
     id: 5,
@@ -84,7 +84,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     power: '22 kW',
     type: 'Type 2',
     rating: 4.9,
-    price: '0.28€/kWh',
+    price: '39 DZA/kWh',
     amenities: ['Hôtel 5*', 'Spa', 'Restaurant']
   }, {
     id: 6,
@@ -95,7 +95,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     power: '75 kW',
     type: 'CHAdeMO',
     rating: 4.4,
-    price: '0.32€/kWh',
+    price: '45 DZA/kWh',
     amenities: ['Résidentiel', 'Parking', 'Sécurité']
   }, {
     id: 7,
@@ -106,7 +106,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     power: '50 kW',
     type: 'CCS',
     rating: 4.5,
-    price: '0.30€/kWh',
+    price: '42 DZA/kWh',
     amenities: ['Hôtel', 'Restaurant', 'WiFi']
   }, {
     id: 8,
@@ -117,7 +117,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     power: '22 kW',
     type: 'Type 2',
     rating: 4.3,
-    price: '0.25€/kWh',
+    price: '35 DZA/kWh',
     amenities: ['Résidentiel', 'Parking', 'Supérette']
   }];
   const getStatusColor = (status: string) => {
