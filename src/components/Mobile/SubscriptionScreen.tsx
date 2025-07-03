@@ -22,6 +22,7 @@ const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({ setActiveTab })
       yearlyPrice: 25000,
       color: 'from-blue-500 to-blue-600',
       icon: Car,
+      popular: false,
       features: [
         language === 'ar' ? 'الوصول لـ 10 محطات' : language === 'fr' ? 'Accès à 10 stations' : 'Access to 10 stations',
         language === 'ar' ? 'شحن حتى 50 كيلو واط' : language === 'fr' ? 'Charge jusqu\'à 50kW' : 'Charge up to 50kW',
@@ -50,6 +51,7 @@ const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({ setActiveTab })
       yearlyPrice: 85000,
       color: 'from-yellow-500 to-orange-500',
       icon: Crown,
+      popular: false,
       features: [
         language === 'ar' ? 'الوصول لجميع المحطات المميزة' : language === 'fr' ? 'Accès à toutes les stations premium' : 'Access to all premium stations',
         language === 'ar' ? 'شحن فائق السرعة 350 كيلو واط' : language === 'fr' ? 'Charge ultra-rapide 350kW' : 'Ultra-fast 350kW charging',
