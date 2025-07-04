@@ -9,6 +9,7 @@ import ChargingScreen from './ChargingScreen';
 import SubscriptionScreen from './SubscriptionScreen';
 import ProfileScreen from './ProfileScreen';
 import SettingsScreen from './SettingsScreen';
+import HelpScreen from './HelpScreen';
 
 const MobileApp = () => {
   const [showIntro, setShowIntro] = useState(true);
@@ -32,6 +33,8 @@ const MobileApp = () => {
         return <ProfileScreen setActiveTab={setActiveTab} />;
       case 'settings':
         return <SettingsScreen setActiveTab={setActiveTab} />;
+      case 'help':
+        return <HelpScreen setActiveTab={setActiveTab} />;
       default:
         return <HomeScreen setActiveTab={setActiveTab} />;
     }

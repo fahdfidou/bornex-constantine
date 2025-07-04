@@ -140,6 +140,15 @@ const translations = {
     'common.kw': 'kW',
     'common.kwh': 'kWh',
     'common.euro': '€',
+    'common.dza': 'DZA',
+    
+    // Payments
+    'payments.ccp': 'CCP (Compte Courant Postal)',
+    'payments.baridiMob': 'Baridi Mob',
+    'payments.bankTransfer': 'Virement Bancaire',
+    'payments.edahabia': 'EDAHABIA',
+    'payments.bankCard': 'Carte Bancaire',
+    'payments.qrCode': 'Code QR',
     
     // Dashboard
     'dashboard.title': 'Tableau de bord',
@@ -303,6 +312,15 @@ const translations = {
     'common.kw': 'كيلو واط',
     'common.kwh': 'كيلو واط ساعة',
     'common.euro': '€',
+    'common.dza': 'د.ج',
+    
+    // Payments
+    'payments.ccp': 'حساب جاري بريدي (CCP)',
+    'payments.baridiMob': 'بريدي موب',
+    'payments.bankTransfer': 'تحويل مصرفي',
+    'payments.edahabia': 'الذهبية',
+    'payments.bankCard': 'بطاقة مصرفية',
+    'payments.qrCode': 'رمز الاستجابة السريعة',
     
     // Dashboard
     'dashboard.title': 'لوحة التحكم',
@@ -466,6 +484,15 @@ const translations = {
     'common.kw': 'kW',
     'common.kwh': 'kWh',
     'common.euro': '€',
+    'common.dza': 'DZA',
+    
+    // Payments
+    'payments.ccp': 'CCP (Postal Current Account)',
+    'payments.baridiMob': 'Baridi Mob',
+    'payments.bankTransfer': 'Bank Transfer',
+    'payments.edahabia': 'EDAHABIA',
+    'payments.bankCard': 'Bank Card',
+    'payments.qrCode': 'QR Code',
     
     // Dashboard
     'dashboard.title': 'Dashboard',

@@ -42,7 +42,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ setActiveTab }) => {
       date: '2024-01-15',
       duration: '45 min',
       energy: '18.5 kWh',
-      cost: '4.62€'
+      cost: '924 DZA'
     },
     {
       id: 2,
@@ -50,7 +50,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ setActiveTab }) => {
       date: '2024-01-12',
       duration: '32 min',
       energy: '28.3 kWh',
-      cost: '9.91€'
+      cost: '1,982 DZA'
     },
     {
       id: 3,
@@ -58,7 +58,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ setActiveTab }) => {
       date: '2024-01-10',
       duration: '1h 15min',
       energy: '24.7 kWh',
-      cost: '6.92€'
+      cost: '1,384 DZA'
     }
   ];
 
@@ -72,7 +72,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ setActiveTab }) => {
     {
       icon: CreditCard,
       label: t('profile.paymentMethods'),
-      subtitle: 'Visa •••• 1234',
+      subtitle: 'CCP • Baridi Mob • Banque',
       action: () => {}
     },
     {
