@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Home, MapPin, Zap, User, Settings } from 'lucide-react';
+import { Home, MapPin, Zap, User, Settings, Wrench } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 
@@ -16,6 +16,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ activeTab, setActiv
     { id: 'home', icon: Home, label: t('nav.home') },
     { id: 'stations', icon: MapPin, label: t('nav.stations') },
     { id: 'charging', icon: Zap, label: t('nav.charging') },
+    { id: 'mystation', icon: Wrench, label: t('nav.myStation') },
     { id: 'profile', icon: User, label: t('nav.profile') },
     { id: 'settings', icon: Settings, label: t('nav.settings') },
   ];

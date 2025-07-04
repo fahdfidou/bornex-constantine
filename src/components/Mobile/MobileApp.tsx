@@ -7,6 +7,7 @@ import HomeScreen from './HomeScreen';
 import StationsScreen from './StationsScreen';
 import ChargingScreen from './ChargingScreen';
 import SubscriptionScreen from './SubscriptionScreen';
+import MyStationScreen from './MyStationScreen';
 import ProfileScreen from './ProfileScreen';
 import SettingsScreen from './SettingsScreen';
 import HelpScreen from './HelpScreen';
@@ -29,6 +30,8 @@ const MobileApp = () => {
         return <ChargingScreen setActiveTab={setActiveTab} />;
       case 'subscription':
         return <SubscriptionScreen setActiveTab={setActiveTab} />;
+      case 'mystation':
+        return <MyStationScreen setActiveTab={setActiveTab} />;
       case 'profile':
         return <ProfileScreen setActiveTab={setActiveTab} />;
       case 'settings':

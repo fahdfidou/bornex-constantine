@@ -1,11 +1,12 @@
 
-import React from 'react';
-import { User, History, Heart, CreditCard, Bell, Leaf, Zap, Calendar } from 'lucide-react';
+import React, { useState } from 'react';
+import { User, History, Heart, CreditCard, Bell, Leaf, Zap, Calendar, Edit3, LogIn } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import LoginScreen from './LoginScreen';
 
 interface ProfileScreenProps {
   setActiveTab: (tab: string) => void;
@@ -13,6 +14,15 @@ interface ProfileScreenProps {
 
 const ProfileScreen: React.FC<ProfileScreenProps> = ({ setActiveTab }) => {
   const { t } = useLanguage();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showLoginScreen, setShowLoginScreen] = useState(false);
+  const [userData, setUserData] = useState({
+    firstName: 'Jean',
+    lastName: 'Dupont',
+    email: 'jean.dupont@email.com',
+    phone: '+213 555 123 456',
+    avatar: null
+  });
 
   const stats = [
     {
@@ -83,6 +93,54 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ setActiveTab }) => {
     }
   ];
 
+  const handleLogin = (userData: any) => {
+    setUserData(userData);
+    setIsLoggedIn(true);
+    setShowLoginScreen(false);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUserData({
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      avatar: null
+    });
+  };
+
+  if (showLoginScreen) {
+    return <LoginScreen onBack={() => setShowLoginScreen(false)} onLogin={handleLogin} />;
+  }
+
+  if (!isLoggedIn) {
+    return (
+      <div className="flex flex-col h-full bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <div className="flex-1 flex items-center justify-center p-6">
+          <Card className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl border-white/20 dark:border-gray-700/20 w-full max-w-md">
+            <CardContent className="p-8 text-center">
+              <User className="h-16 w-16 mx-auto mb-4 text-gray-400" />
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                {t('auth.welcome')}
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Connectez-vous pour accéder à votre profil
+              </p>
+              <Button 
+                onClick={() => setShowLoginScreen(true)}
+                className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white"
+              >
+                <LogIn className="h-4 w-4 mr-2" />
+                {t('auth.login')}
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col h-full bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Header */}
@@ -102,10 +160,10 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ setActiveTab }) => {
             </Avatar>
             <div className="flex-1">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                Jean Dupont
+                {userData.firstName} {userData.lastName}
               </h2>
               <p className="text-gray-600 dark:text-gray-300">
-                jean.dupont@email.com
+                {userData.email}
               </p>
               <Badge className="mt-1 bg-gradient-to-r from-purple-500 to-blue-500 text-white">
                 Premium Member
@@ -113,13 +171,22 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ setActiveTab }) => {
             </div>
           </div>
 
-          <Button 
-            variant="outline"
-            className="w-full bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border-white/30 dark:border-gray-600/30 hover:bg-white/70 dark:hover:bg-gray-700/70"
-          >
-            <User className="h-4 w-4 mr-2" />
-            {t('profile.editProfile')}
-          </Button>
+          <div className="flex gap-2">
+            <Button 
+              variant="outline"
+              className="flex-1 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border-white/30 dark:border-gray-600/30 hover:bg-white/70 dark:hover:bg-gray-700/70"
+            >
+              <Edit3 className="h-4 w-4 mr-2" />
+              {t('profile.editProfile')}
+            </Button>
+            <Button 
+              variant="outline"
+              onClick={handleLogout}
+              className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border-white/30 dark:border-gray-600/30 hover:bg-white/70 dark:hover:bg-gray-700/70"
+            >
+              <LogIn className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </div>
 
