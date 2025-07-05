@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import ReportIssueDialog from './ReportIssueDialog';
 
 interface MyStationScreenProps {
   setActiveTab: (tab: string) => void;
@@ -36,6 +37,8 @@ const MyStationScreen: React.FC<MyStationScreenProps> = ({ setActiveTab }) => {
 
   const [timers, setTimers] = useState<{[key: number]: string}>({});
   const [showNotification, setShowNotification] = useState(false);
+  const [showReportDialog, setShowReportDialog] = useState(false);
+  const [selectedStationName, setSelectedStationName] = useState('');
 
   const [showAddForm, setShowAddForm] = useState(false);
   const [newStation, setNewStation] = useState({
@@ -319,36 +322,74 @@ const MyStationScreen: React.FC<MyStationScreenProps> = ({ setActiveTab }) => {
 
                   {/* Timer Programming */}
                   {station.isOn && (
-                    <div className="p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
-                      <div className="flex items-center gap-2 mb-2">
+                    <div className="p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg space-y-3">
+                      <div className="flex items-center gap-2">
                         <Timer className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
                         <Label className="text-sm font-medium text-gray-900 dark:text-white">
                           {t('myStation.autoOffTimer')}
                         </Label>
                       </div>
-                      <div className="flex gap-2">
-                        <Input
-                          placeholder="Ex: 2h 30min"
-                          value={timers[station.id] || ''}
-                          onChange={(e) => setTimers({...timers, [station.id]: e.target.value})}
-                          className="flex-1"
-                        />
-                        <Button 
-                          size="sm" 
-                          variant="outline"
-                          onClick={() => {
-                            setStations(stations.map(s => 
-                              s.id === station.id ? { ...s, autoOffTimer: timers[station.id] || '' } : s
-                            ));
-                          }}
-                        >
-                          {t('myStation.setTimer')}
-                        </Button>
+                      
+                      {/* Duration Timer */}
+                      <div className="space-y-2">
+                        <Label className="text-xs text-gray-600 dark:text-gray-300">
+                          {t('myStation.setDuration')}
+                        </Label>
+                        <div className="flex gap-2">
+                          <Input
+                            placeholder="Ex: 2h 30min"
+                            value={timers[station.id] || ''}
+                            onChange={(e) => setTimers({...timers, [station.id]: e.target.value})}
+                            className="flex-1"
+                          />
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            onClick={() => {
+                              setStations(stations.map(s => 
+                                s.id === station.id ? { ...s, autoOffTimer: timers[station.id] || '' } : s
+                              ));
+                            }}
+                          >
+                            {t('myStation.setTimer')}
+                          </Button>
+                        </div>
                       </div>
-                      {station.autoOffTimer && (
-                        <p className="text-xs text-yellow-600 dark:text-yellow-400 mt-1">
-                          {t('myStation.timerSet')}: {station.autoOffTimer}
-                        </p>
+
+                      {/* Specific Time Timer */}
+                      <div className="space-y-2">
+                        <Label className="text-xs text-gray-600 dark:text-gray-300">
+                          {t('myStation.setSpecificTime')}
+                        </Label>
+                        <div className="flex gap-2">
+                          <Input
+                            type="time"
+                            className="flex-1"
+                            onChange={(e) => {
+                              const time = e.target.value;
+                              setStations(stations.map(s => 
+                                s.id === station.id ? { ...s, specificOffTime: time } : s
+                              ));
+                            }}
+                          />
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                          >
+                            {t('myStation.schedule')}
+                          </Button>
+                        </div>
+                      </div>
+
+                      {(station.autoOffTimer || (station as any).specificOffTime) && (
+                        <div className="text-xs text-yellow-600 dark:text-yellow-400 space-y-1">
+                          {station.autoOffTimer && (
+                            <p>{t('myStation.timerSet')}: {station.autoOffTimer}</p>
+                          )}
+                          {(station as any).specificOffTime && (
+                            <p>{t('myStation.scheduledOff')}: {(station as any).specificOffTime}</p>
+                          )}
+                        </div>
                       )}
                     </div>
                   )}
@@ -356,13 +397,7 @@ const MyStationScreen: React.FC<MyStationScreenProps> = ({ setActiveTab }) => {
                   {/* AI Optimization */}
                   <Button 
                     className="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white"
-                    onClick={() => {
-                      // Simulate AI optimization
-                      if (station.notifications) {
-                        setShowNotification(true);
-                        setTimeout(() => setShowNotification(false), 3000);
-                      }
-                    }}
+                    onClick={() => setActiveTab('aioptimization')}
                   >
                     <Brain className="h-4 w-4 mr-2" />
                     {t('myStation.aiOptimization')}
@@ -374,7 +409,15 @@ const MyStationScreen: React.FC<MyStationScreenProps> = ({ setActiveTab }) => {
                       <Settings className="h-4 w-4 mr-2" />
                       {t('myStation.configure')}
                     </Button>
-                    <Button variant="outline" size="sm" className="flex-1">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="flex-1"
+                      onClick={() => {
+                        setSelectedStationName(station.name);
+                        setShowReportDialog(true);
+                      }}
+                    >
                       <AlertTriangle className="h-4 w-4 mr-2" />
                       {t('myStation.reportIssue')}
                     </Button>
@@ -416,6 +459,13 @@ const MyStationScreen: React.FC<MyStationScreenProps> = ({ setActiveTab }) => {
           )}
         </div>
       </div>
+
+      {/* Report Issue Dialog */}
+      <ReportIssueDialog
+        open={showReportDialog}
+        onOpenChange={setShowReportDialog}
+        stationName={selectedStationName}
+      />
     </div>
   );
 };
