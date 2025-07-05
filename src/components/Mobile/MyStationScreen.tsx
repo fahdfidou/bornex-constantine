@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Plus, Settings, Zap, Thermometer, Clock, Battery, AlertTriangle, Bell, Power, Gauge } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Plus, Settings, Zap, Thermometer, Clock, Battery, AlertTriangle, Bell, Power, Gauge, Timer, Brain, PlayCircle, StopCircle } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -26,9 +26,16 @@ const MyStationScreen: React.FC<MyStationScreenProps> = ({ setActiveTab }) => {
       status: 'available',
       chargeTime: '2h 30min',
       notifications: true,
-      location: 'Garage Principal'
+      location: 'Garage Principal',
+      isOn: false,
+      batteryRemaining: '85%',
+      autoOffTimer: '',
+      isCharging: false
     }
   ]);
+
+  const [timers, setTimers] = useState<{[key: number]: string}>({});
+  const [showNotification, setShowNotification] = useState(false);
 
   const [showAddForm, setShowAddForm] = useState(false);
   const [newStation, setNewStation] = useState({
@@ -53,7 +60,11 @@ const MyStationScreen: React.FC<MyStationScreenProps> = ({ setActiveTab }) => {
         status: 'available',
         chargeTime: newStation.chargeTime,
         notifications: newStation.notifications,
-        location: newStation.location
+        location: newStation.location,
+        isOn: false,
+        batteryRemaining: '100%',
+        autoOffTimer: '',
+        isCharging: false
       }]);
       setNewStation({
         name: '',
@@ -242,51 +253,132 @@ const MyStationScreen: React.FC<MyStationScreenProps> = ({ setActiveTab }) => {
               </CardHeader>
               
               <CardContent className="space-y-4">
-                {/* Stats Grid */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="flex items-center gap-2 p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                    <Power className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                    <div>
-                      <p className="text-xs text-gray-600 dark:text-gray-300">{t('myStation.power')}</p>
-                      <p className="font-semibold text-gray-900 dark:text-white">{station.power}</p>
+                {/* Control Section */}
+                <div className="space-y-4">
+                  {/* Power Control */}
+                  <div className="flex items-center justify-between p-3 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      {station.isOn ? (
+                        <StopCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
+                      ) : (
+                        <PlayCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
+                      )}
+                      <div>
+                        <p className="font-medium text-gray-900 dark:text-white">
+                          {station.isOn ? t('myStation.turnOff') : t('myStation.turnOn')}
+                        </p>
+                        <p className="text-xs text-gray-600 dark:text-gray-300">
+                          {station.isOn ? t('myStation.stationActive') : t('myStation.stationInactive')}
+                        </p>
+                      </div>
                     </div>
+                    <Switch
+                      checked={station.isOn}
+                      onCheckedChange={(checked) => {
+                        setStations(stations.map(s => 
+                          s.id === station.id ? { ...s, isOn: checked, status: checked ? 'available' : 'offline' } : s
+                        ));
+                      }}
+                    />
                   </div>
-                  
-                  <div className="flex items-center gap-2 p-2 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                    <Battery className="h-4 w-4 text-green-600 dark:text-green-400" />
-                    <div>
-                      <p className="text-xs text-gray-600 dark:text-gray-300">{t('myStation.capacity')}</p>
-                      <p className="font-semibold text-gray-900 dark:text-white">{station.capacity}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-2 p-2 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
-                    <Thermometer className="h-4 w-4 text-orange-600 dark:text-orange-400" />
-                    <div>
-                      <p className="text-xs text-gray-600 dark:text-gray-300">{t('myStation.temperature')}</p>
-                      <p className="font-semibold text-gray-900 dark:text-white">{station.temperature}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-2 p-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                    <Clock className="h-4 w-4 text-purple-600 dark:text-purple-400" />
-                    <div>
-                      <p className="text-xs text-gray-600 dark:text-gray-300">{t('myStation.chargeTime')}</p>
-                      <p className="font-semibold text-gray-900 dark:text-white">{station.chargeTime}</p>
-                    </div>
-                  </div>
-                </div>
 
-                {/* Action Buttons */}
-                <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="flex-1">
-                    <Settings className="h-4 w-4 mr-2" />
-                    {t('myStation.configure')}
+                  {/* Stats Grid */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="flex items-center gap-2 p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                      <Power className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                      <div>
+                        <p className="text-xs text-gray-600 dark:text-gray-300">{t('myStation.power')}</p>
+                        <p className="font-semibold text-gray-900 dark:text-white">{station.power}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-2 p-2 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                      <Battery className="h-4 w-4 text-green-600 dark:text-green-400" />
+                      <div>
+                        <p className="text-xs text-gray-600 dark:text-gray-300">{t('myStation.batteryRemaining')}</p>
+                        <p className="font-semibold text-gray-900 dark:text-white">{station.batteryRemaining}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-2 p-2 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                      <Thermometer className="h-4 w-4 text-orange-600 dark:text-orange-400" />
+                      <div>
+                        <p className="text-xs text-gray-600 dark:text-gray-300">{t('myStation.temperature')}</p>
+                        <p className="font-semibold text-gray-900 dark:text-white">{station.temperature}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-2 p-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                      <Clock className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+                      <div>
+                        <p className="text-xs text-gray-600 dark:text-gray-300">{t('myStation.chargeTime')}</p>
+                        <p className="font-semibold text-gray-900 dark:text-white">{station.chargeTime}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Timer Programming */}
+                  {station.isOn && (
+                    <div className="p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Timer className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
+                        <Label className="text-sm font-medium text-gray-900 dark:text-white">
+                          {t('myStation.autoOffTimer')}
+                        </Label>
+                      </div>
+                      <div className="flex gap-2">
+                        <Input
+                          placeholder="Ex: 2h 30min"
+                          value={timers[station.id] || ''}
+                          onChange={(e) => setTimers({...timers, [station.id]: e.target.value})}
+                          className="flex-1"
+                        />
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={() => {
+                            setStations(stations.map(s => 
+                              s.id === station.id ? { ...s, autoOffTimer: timers[station.id] || '' } : s
+                            ));
+                          }}
+                        >
+                          {t('myStation.setTimer')}
+                        </Button>
+                      </div>
+                      {station.autoOffTimer && (
+                        <p className="text-xs text-yellow-600 dark:text-yellow-400 mt-1">
+                          {t('myStation.timerSet')}: {station.autoOffTimer}
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+                  {/* AI Optimization */}
+                  <Button 
+                    className="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white"
+                    onClick={() => {
+                      // Simulate AI optimization
+                      if (station.notifications) {
+                        setShowNotification(true);
+                        setTimeout(() => setShowNotification(false), 3000);
+                      }
+                    }}
+                  >
+                    <Brain className="h-4 w-4 mr-2" />
+                    {t('myStation.aiOptimization')}
                   </Button>
-                  <Button variant="outline" size="sm" className="flex-1">
-                    <AlertTriangle className="h-4 w-4 mr-2" />
-                    {t('myStation.reportIssue')}
-                  </Button>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" className="flex-1">
+                      <Settings className="h-4 w-4 mr-2" />
+                      {t('myStation.configure')}
+                    </Button>
+                    <Button variant="outline" size="sm" className="flex-1">
+                      <AlertTriangle className="h-4 w-4 mr-2" />
+                      {t('myStation.reportIssue')}
+                    </Button>
+                  </div>
                 </div>
 
                 {/* Notifications Status */}

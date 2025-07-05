@@ -146,6 +146,15 @@ const translations = {
     'myStation.chargeTime': 'Temps de charge',
     'myStation.error': 'Erreur',
     'myStation.charging': 'En charge',
+    'myStation.turnOn': 'Allumer la borne',
+    'myStation.turnOff': 'Éteindre la borne',
+    'myStation.stationActive': 'Borne active',
+    'myStation.stationInactive': 'Borne inactive',
+    'myStation.batteryRemaining': 'Batterie restante',
+    'myStation.autoOffTimer': 'Arrêt automatique',
+    'myStation.setTimer': 'Programmer',
+    'myStation.timerSet': 'Programmé',
+    'myStation.aiOptimization': 'Optimisation IA',
 
     // Authentication
     'auth.welcome': 'Bienvenue',
@@ -361,6 +370,15 @@ const translations = {
     'myStation.chargeTime': 'وقت الشحن',
     'myStation.error': 'خطأ',
     'myStation.charging': 'قيد الشحن',
+    'myStation.turnOn': 'تشغيل المحطة',
+    'myStation.turnOff': 'إيقاف المحطة',
+    'myStation.stationActive': 'المحطة نشطة',
+    'myStation.stationInactive': 'المحطة غير نشطة',
+    'myStation.batteryRemaining': 'البطارية المتبقية',
+    'myStation.autoOffTimer': 'الإيقاف التلقائي',
+    'myStation.setTimer': 'برمجة',
+    'myStation.timerSet': 'مبرمج',
+    'myStation.aiOptimization': 'تحسين الذكاء الاصطناعي',
 
     // Authentication
     'auth.welcome': 'مرحباً',
@@ -576,6 +594,15 @@ const translations = {
     'myStation.chargeTime': 'Charge Time',
     'myStation.error': 'Error',
     'myStation.charging': 'Charging',
+    'myStation.turnOn': 'Turn On Station',
+    'myStation.turnOff': 'Turn Off Station',
+    'myStation.stationActive': 'Station Active',
+    'myStation.stationInactive': 'Station Inactive',
+    'myStation.batteryRemaining': 'Battery Remaining',
+    'myStation.autoOffTimer': 'Auto Off Timer',
+    'myStation.setTimer': 'Set Timer',
+    'myStation.timerSet': 'Timer Set',
+    'myStation.aiOptimization': 'AI Optimization',
 
     // Authentication
     'auth.welcome': 'Welcome',
