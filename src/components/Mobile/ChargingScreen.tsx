@@ -171,7 +171,7 @@ const ChargingScreen: React.FC<ChargingScreenProps> = ({ setActiveTab }) => {
               <CardContent className="p-4 text-center">
                 <DollarSign className="h-6 w-6 mx-auto mb-2 text-orange-600 dark:text-orange-400" />
                 <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
-                  {currentCost.toFixed(2)}{t('common.euro')}
+                  {currentCost.toFixed(2)} {t('common.dza')}
                 </div>
                 <p className="text-sm text-gray-600 dark:text-gray-300">
                   {t('charging.cost')}
