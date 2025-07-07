@@ -57,10 +57,10 @@ const MobileApp = () => {
   return (
     <LanguageProvider>
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-        {/* Mobile Container */}
-        <div className="max-w-md mx-auto bg-white dark:bg-gray-800 min-h-screen relative shadow-2xl overflow-hidden">
+        {/* Mobile Container - Full width on mobile, constrained on larger screens */}
+        <div className="w-full sm:max-w-md sm:mx-auto bg-white dark:bg-gray-800 min-h-screen relative sm:shadow-2xl overflow-hidden">
           {/* Screen Content */}
-          <div className="h-screen flex flex-col">
+          <div className="h-screen flex flex-col pb-16">
             {renderScreen()}
           </div>
           

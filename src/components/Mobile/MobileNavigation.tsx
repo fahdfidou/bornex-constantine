@@ -23,7 +23,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ activeTab, setActiv
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-t border-gray-200/50 dark:border-gray-700/50 z-50">
-      <div className="flex justify-around items-center py-2 px-4 max-w-md mx-auto">
+      <div className="flex justify-around items-center py-2 px-2 sm:px-4 w-full sm:max-w-md sm:mx-auto safe-area-pb">
         {navigationItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
@@ -34,7 +34,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ activeTab, setActiv
               variant="ghost"
               size="sm"
               onClick={() => setActiveTab(item.id)}
-              className={`flex flex-col items-center justify-center py-2 px-3 h-auto min-h-[60px] transition-all duration-300 ${
+              className={`flex flex-col items-center justify-center py-2 px-1 sm:px-3 h-auto min-h-[60px] flex-1 max-w-[80px] transition-all duration-300 ${
                 isActive 
                   ? 'text-blue-600 dark:text-blue-400' 
                   : 'text-gray-600 dark:text-gray-400'
@@ -50,7 +50,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ activeTab, setActiv
                   <div className="absolute -top-1 -inset-1 bg-blue-100 dark:bg-blue-900/30 rounded-full -z-10 animate-pulse" />
                 )}
               </div>
-              <span className={`text-xs font-medium transition-all duration-300 ${
+              <span className={`text-xs font-medium transition-all duration-300 text-center leading-tight ${
                 isActive ? 'text-blue-600 dark:text-blue-400' : ''
               }`}>
                 {item.label}
