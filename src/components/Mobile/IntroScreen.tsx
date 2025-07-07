@@ -42,18 +42,20 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onComplete }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col">
+    <div className="dark min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col">
       <div className="flex-1 flex flex-col items-center justify-center p-8">
         <div className="max-w-md w-full text-center space-y-8">
           
           {/* Logo ou Icône */}
           {currentScreen.showLogo ? (
             <div className="w-32 h-32 mx-auto mb-8 animate-fade-in">
-              <img 
-                src="/lovable-uploads/4a4164ae-ab3a-43a0-9d61-01edf0113205.png" 
-                alt="Logo de l'application" 
-                className="w-full h-full object-contain"
-              />
+              <div className="w-full h-full bg-white/10 backdrop-blur-sm rounded-3xl p-4 border border-white/20">
+                <img 
+                  src="/lovable-uploads/4a4164ae-ab3a-43a0-9d61-01edf0113205.png" 
+                  alt="Logo de l'application" 
+                  className="w-full h-full object-contain filter brightness-110"
+                />
+              </div>
             </div>
           ) : currentScreen.icon && (
             <div className="w-24 h-24 mx-auto mb-8 bg-gradient-to-br from-green-500 to-blue-600 rounded-full flex items-center justify-center animate-bounce">
@@ -63,10 +65,10 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onComplete }) => {
 
           {/* Titre */}
           <div className="space-y-4 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-3xl font-bold text-white">
               {currentScreen.title}
             </h1>
-            <p className="text-lg text-gray-600 dark:text-gray-300">
+            <p className="text-lg text-gray-300">
               {currentScreen.subtitle}
             </p>
           </div>
@@ -77,13 +79,13 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onComplete }) => {
               {currentScreen.features.map((feature, index) => (
                 <div 
                   key={index}
-                  className="flex items-center gap-3 p-3 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-lg border border-white/20 dark:border-gray-700/20"
+                  className="flex items-center gap-3 p-3 bg-gray-800/70 backdrop-blur-sm rounded-lg border border-gray-700/20"
                   style={{ animationDelay: `${0.5 + index * 0.1}s` }}
                 >
                   <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
                     <Zap className="h-4 w-4 text-white" />
                   </div>
-                  <span className="text-gray-900 dark:text-white font-medium">
+                  <span className="text-white font-medium">
                     {feature}
                   </span>
                 </div>
@@ -114,8 +116,8 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onComplete }) => {
             key={index}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
               index === currentStep 
-                ? 'bg-green-600 w-8' 
-                : 'bg-gray-300 dark:bg-gray-600'
+                ? 'bg-green-500 w-8' 
+                : 'bg-gray-600'
             }`}
           />
         ))}
