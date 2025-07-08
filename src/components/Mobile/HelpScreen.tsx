@@ -15,14 +15,14 @@ const HelpScreen: React.FC<HelpScreenProps> = ({ setActiveTab }) => {
     {
       icon: Phone,
       title: 'Téléphone',
-      subtitle: '+213 31 XX XX XX',
+      subtitle: '0555449312',
       description: 'Lun-Ven: 8h-18h',
       color: 'from-green-500 to-emerald-600'
     },
     {
       icon: Mail,
       title: 'Email',
-      subtitle: 'support@echarge-dz.com',
+      subtitle: 'Bornex@mediasmart.dz',
       description: 'Réponse sous 24h',
       color: 'from-blue-500 to-blue-600'
     },
