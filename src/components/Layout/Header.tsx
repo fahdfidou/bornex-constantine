@@ -14,9 +14,9 @@ const Header = () => {
   const { language, setLanguage, darkMode, toggleDarkMode } = useLanguage();
 
   const languages = [
-    { code: 'fr', name: 'Français', flag: '🇫🇷', nativeName: 'Français' },
     { code: 'ar', name: 'العربية', flag: '🇩🇿', nativeName: 'العربية' },
     { code: 'en', name: 'English', flag: '🇺🇸', nativeName: 'English' },
+    { code: 'fr', name: 'Français', flag: '🇫🇷', nativeName: 'Français' },
   ];
 
   const currentLanguage = languages.find(lang => lang.code === language);

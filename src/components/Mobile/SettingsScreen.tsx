@@ -15,9 +15,9 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ setActiveTab }) => {
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
 
   const languages = [
-    { code: 'fr', name: 'Français', flag: '🇫🇷' },
     { code: 'ar', name: 'العربية', flag: '🇩🇿' },
     { code: 'en', name: 'English', flag: '🇺🇸' },
+    { code: 'fr', name: 'Français', flag: '🇫🇷' },
   ];
 
   const settingsGroups = [
