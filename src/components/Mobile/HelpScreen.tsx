@@ -16,7 +16,7 @@ const HelpScreen: React.FC<HelpScreenProps> = ({ setActiveTab }) => {
       icon: Phone,
       title: 'Téléphone',
       subtitle: '0555449312',
-      description: 'Disponible 7j/7 - 24h/24',
+      description: 'Disponible 7j/24h',
       color: 'from-green-500 to-emerald-600'
     },
     {
